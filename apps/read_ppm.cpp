@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <image_io.hpp>
+#include <geometry_base.hpp>
 
 using namespace std;
 

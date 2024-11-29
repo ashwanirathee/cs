@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+.env/
+temp/
+build/
+external/

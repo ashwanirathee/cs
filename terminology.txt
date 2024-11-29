@@ -1,0 +1,2 @@
+- Projective Transformation: A projective transformation maps points from a higher-dimensional space (such as 3D) to a lower-dimensional space (such as 2D), and it includes transformations like perspective projection, which models how a 3D scene is captured onto a 2D image plane (e.g., a photograph or a rendered image).
+- Ideal points(vanishing points): points where parallel lines meet in projective geometry.
