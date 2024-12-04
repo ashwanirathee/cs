@@ -1,3 +1,6 @@
+#ifndef IMAGE_IO_HPP
+#define IMAGE_IO_HPP
+
 #include <vector>
 #include <string>
 #include <fstream>
@@ -75,3 +78,5 @@ public:
 
 bool read_ppm(const std::string &filename, Image *&image);
 bool write_ppm(const std::string &filename, Image *image);
+
+#endif

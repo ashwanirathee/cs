@@ -27,13 +27,14 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # Path to the locally downloaded Eigen (adjust the path if needed)
+set(BASE_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
 set(EIGEN3_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/external/eigen")
+set(EXTERNAL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/external/rapidjson/include")
+set(COMBINED_INCLUDE_DIR ${BASE_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIR} ${EXTERNAL_INCLUDE_DIR})
 
 # Add the include directory for Eigen
 include_directories(${EIGEN3_INCLUDE_DIR})
+include_directories(${EXTERNAL_INCLUDE_DIR})
 
 add_subdirectory(src)
 add_subdirectory(apps)
-
-# Include sub-projects.
-# add_subdirectory ("VTK_Engine")
