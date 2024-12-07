@@ -35,3 +35,7 @@
 temp/
 build/
 external/
+
+apps/flower_classification/data
+*.ipynb_checkpoints
+test_space/
