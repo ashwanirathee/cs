@@ -1,0 +1,2 @@
+- Make a personal dataset for training
+- Put it on mobile

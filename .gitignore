@@ -38,3 +38,7 @@ external/
 assets/santa_cruz_flora/images/
 assets/santa_cruz_flora/*.csv
 apps/*.png
+
+apps/flower_classification/data
+*.ipynb_checkpoints
+test_space/
