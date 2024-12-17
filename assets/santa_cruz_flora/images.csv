@@ -1,0 +1,6 @@
+label,multi_single,one_class,class_1,class_2
+image_1,0,class_1,1,0
+image_2,0,class_1,1,0
+image_3,0,class_2,0,1
+image_4,0,class_2,0,1
+image_5,1,class_more,1,1
