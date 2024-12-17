@@ -35,3 +35,6 @@
 temp/
 build/
 external/
+assets/santa_cruz_flora/images/
+assets/santa_cruz_flora/*.csv
+apps/*.png
