@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Assignment 0</title>
+    
+  </head>
+  <style>
+    canvas {
+      background-color: black;
+      border: 1px solid #ccc;
+    }
+  </style>
+
+  <body onload="main()">
+    <canvas id="example" width="400" height="400">
+      Please use a browser that supports "canvas"
+    </canvas>
+    <div>
+      <label for="v1_x_input">v1: x</label>
+      <input type="text" id="v1_x_input" placeholder="v1 x">
+      <label for="v1_y_input">y:</label>
+      <input type="text" id="v1_y_input" placeholder="v1 y">
+    </div>
+
+    <div>
+      <label for="v2_x_input">v2: x</label>
+      <input type="text" id="v2_x_input" placeholder="v2 x">
+      <label for="v2_y_input">y:</label>
+      <input type="text" id="v2_y_input" placeholder="v2 y">
+    </div>
+    <button id="drawButton">draw</button>
+
+    <div>
+      <label for="operation">Operation:</label>
+      <select id="operation" name ="operation">
+        <option value="add">Add</option>
+        <option value="sub">Subtract</option>
+        <option value="div">Divide</option>
+        <option value="mult">Multiply</option>
+        <option value="mag">Magnitude</option>
+        <option value="norm">Normalize</option>
+        <option value="angle">Angle</option>
+        <option value="area">Area</option>
+      </select> 
+      <label for="scalar_input">Scalar:</label>
+      <input type="text" id="scalar_input" placeholder="scalar value">
+    </div>
+
+    <button id="drawOperationButton">draw</button>
+    
+    <script src="./lib/cuon-matrix-cse160.js"></script>
+    <script src="asg0.js"></script>
+
+  </body>
+</html>
