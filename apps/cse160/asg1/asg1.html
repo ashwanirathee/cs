@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Assignment 1</title>
+    
+  </head>
+  <style>
+    canvas {
+      background-color: black;
+      border: 1px solid #ccc;
+    }
+  </style>
+
+  <body onload="main()">
+    <canvas id="webgl_canvas" width="400" height="400">
+      Please use a browser that supports "canvas"
+    </canvas>
+    <br>
+    <button id="clear_canvas">Clear Canvas</button>
+    
+    <p>Drawing Mode:</p>
+    <button id="square_choice">Squares</button>
+    <button id="triangles_choice">Triangles</button>
+    <button id="circles_choice">Circles</button>
+
+    <div>
+    <label for="red_val">Red: </label>
+    <input type="range" min="0" max="10" value="1" id="red_val">
+    <label for="green_val">Green: </label>
+    <input type="range" min="0" max="10" value="1" id="green_val">
+    <label for="blue_val">Blue: </label>
+    <input type="range" min="0" max="10" value="1" id="blue_val">
+    <label for="alpha_val">Alpha: </label>
+    <input type="range" min="0" max="10" value="1" id="alpha_val">
+    <br>
+    <label for="shape_size">Shape Size: </label>
+    <input type="range" min="0" max="10" value="5" id="shape_size">
+    <label for="circle_segment_count">Circle Segment Count: </label>
+    <input type="text" id="circle_segment_count">
+</div>
+
+    <script src="./lib/webgl-utils.js"></script>
+    <script src="./lib/webgl-debug.js"></script>
+    <script src="./lib/cuon-matrix-cse160.js"></script>
+    <script src="./lib/cuon-utils.js"></script>
+    <script src="asg1.js"></script>
+  </body>
+</html>
