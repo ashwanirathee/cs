@@ -74,6 +74,10 @@ class Vector3 {
     div(scalar) {
         // Insert your code here.
         // This function should change this vector (this.elements) and not create a new vector.
+        if (scalar == 0) {
+          console.error("Cannot divide by zero");
+          return this;
+        }
         this.elements[0] /= scalar;
         this.elements[1] /= scalar;
         this.elements[2] /= scalar;
@@ -145,7 +149,7 @@ class Vector3 {
         const mag = this.magnitude();
         if (mag === 0) {
             console.error("Cannot normalize a zero vector");
-            return this;
+            return -1;
         }
         this.elements[0] /= mag;
         this.elements[1] /= mag;
