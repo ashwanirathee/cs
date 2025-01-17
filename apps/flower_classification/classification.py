@@ -4,6 +4,7 @@ from torch.utils.data import DataLoader
 import torch.nn as nn
 from torchvision import models
 import torch.optim as optim
+import numpy as np
 
 # Define transformations
 transform = transforms.Compose([
@@ -15,7 +16,7 @@ transform = transforms.Compose([
 # Load Flowers102 dataset
 train_data = datasets.Flowers102(
     root="./data",  # Directory to store data
-    split="train",  # Options: 'train', 'val', 'test'
+    split="test",  # Options: 'train', 'val', 'test'
     transform=transform,
     download=True   # Download if not already downloaded
 )
@@ -29,7 +30,7 @@ val_data = datasets.Flowers102(
 
 test_data = datasets.Flowers102(
     root="./data",
-    split="test",
+    split="train",
     transform=transform,
     download=True
 )
