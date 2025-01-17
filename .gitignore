@@ -42,3 +42,7 @@ apps/*.png
 apps/flower_classification/data
 *.ipynb_checkpoints
 test_space/
+apps/gaussian_splat/assets
+apps/examples
+apps/gaussian_splat
+apps/flower_classification/wandb
