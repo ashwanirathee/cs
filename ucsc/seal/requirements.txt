@@ -1,0 +1,6 @@
+numba
+scipy
+numpy
+matplotlib
+lightbeam
+numexpr
