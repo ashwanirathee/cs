@@ -20,5 +20,3 @@ function main() {
   addEventListeners();
   clearCanvas();
 }
-
-main();

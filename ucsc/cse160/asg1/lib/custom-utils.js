@@ -8,14 +8,14 @@ function clearCanvas() {
 function setupWebGL() {
   // Retrieve <canvas> element
   canvas = document.getElementById("webgl_canvas");
-
+  // console.log("Trying to get rendering context")
   // Get the rendering context for WebGL
-  gl = getWebGLContext(canvas);
+  gl = getWebGLContext(canvas,  { preserveDrawingBuffer: true});
   if (!gl) {
     console.log("Failed to get the rendering context for WebGL");
     return;
   }
-  console.log(gl);
+  // console.log(gl);
 }
 
 function connectVariablesToGLSL() {
