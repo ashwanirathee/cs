@@ -47,5 +47,3 @@ apps/examples
 apps/gaussian_splat
 apps/flower_classification/wandb
 apps/flower_classification/flower_model_mobilenet.pth
-ucsc/seal/venv
-ucsc/seal/lightbeam
