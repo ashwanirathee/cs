@@ -45,6 +45,8 @@
     </div>
 
   <br>
+  <p id="perf">perfstats:</p>
+  <p id="brush_type">Brush Type: Points/Square</p>
   <button id="clear_canvas">Clear Canvas</button>
 
   <p>Drawing Mode:</p>
@@ -67,11 +69,11 @@
     <input type="range" min="3" max="20" value="10" id="circle_segment_count">
   </div>
   <p>
-    I include the conditions mentioned in the assignment, also all my shapes are in scene.shapesList where scene is a instance class Scene
+    Shapes are in scene.shapesList where scene is a instance class Scene:
     <ol>
-      <li>For each paint brush type: select the brush, size, color. Default are already set, you can just get started.</li>
-      <li>For drawing a picture case, I drew the chrome dinosaur and I paint it with triangles. Click on the dinosaur button and then click on the canvas anywhere it would show the dinosaur.</li>
-      <li>For third part, select setup game and click on canvas. It will setup an arbitary maze and you as a player are gray box and you are supposed to reach at red box using keys w,a,s,d which are up,left,down,right respectively. If you do, let me know what you see! Also do ClearCanvas after the game is done to clear it out.</li>
+      <li>Brush Selection: For each paintbrush type, choose the brush, size, and color. Default settings are already configured, so you can start drawing right away.</li>
+      <li>Drawing the Dinosaur: To draw the chrome dinosaur, click the dinosaur button and then click on the canvas. After a brief 200 ms delay (to prevent multiple drawings), the dinosaur, composed of triangles, will appear. The dinosaur is made up of two triangles that form a square-like shape.</li>
+      <li>Setting Up the Game: Select the "Setup Game" option and click on the canvas to generate a random maze. You control a gray box and must navigate to a red box using the arrow keys (W, A, S, D for up, left, down, right). Once you complete the maze, let me know what you see! After finishing, use the "Clear Canvas" option to reset the game and clear the canvas.</li>
     </ol>
   </p>
   <script src="./lib/webgl-utils.js"></script>

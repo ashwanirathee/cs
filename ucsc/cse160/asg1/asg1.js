@@ -3,6 +3,7 @@ function withinRange(new_x, new_y){
 }
 
 function addEventListeners() {
+  // this handles general brush cases
   canvas.onmousemove = click;
 
   // most of these buttons are in global.js
@@ -24,22 +25,27 @@ function addEventListeners() {
   square_choice.addEventListener("click", () => {
     shape = 0;
     console.log("sq selected");
+    document.getElementById('brush_type').innerHTML = "Brush Type: Points/Square";
   });
   triangle_choice.addEventListener("click", () => {
     shape = 1;
     console.log("tr selected");
+    document.getElementById('brush_type').innerHTML = "Brush Type: Triangle";
   });
   circle_choice.addEventListener("click", () => {
     shape = 2;
     console.log("ci selected");
+    document.getElementById('brush_type').innerHTML = "Brush Type: Circle";
   });
   dinosaur_choice.addEventListener("click", () => {
     shape = 3;
     console.log("dinosaur selected");
+    document.getElementById('brush_type').innerHTML = "Type: Dinosaur";
   });
   setup_game_button.addEventListener("click", () => {
     shape = 4;
     console.log("setup_game selected");
+    document.getElementById('brush_type').innerHTML = "Type: Setup Game";
   });
 
   document.addEventListener('keydown', function(event) {
