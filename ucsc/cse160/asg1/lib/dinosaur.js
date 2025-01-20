@@ -29,7 +29,7 @@ class Dinosaur {
   render() {
 
     gl.uniform1f(a_Size, 5);
-    var d = this.size / 70.0;
+    var d = 5 / 70.0;
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
         if (this.shape[i][j] == 1) {
