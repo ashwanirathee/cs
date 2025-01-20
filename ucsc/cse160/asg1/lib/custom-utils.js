@@ -49,7 +49,9 @@ function handleSizeChangeEvent() {
   size_val = shape_size.value;
 }
 
+var isChecking = true;
 function click(ev) {
+  if(isChecking == false) return;
   if (ev.buttons != 1) return;
   // console.log(scene);
   if (shape == 4) {
@@ -74,6 +76,10 @@ function click(ev) {
       special_point.color = [red_val, green_val, blue_val, 1.0];
       special_point.size = size_val;
       special_point.render();
+      isChecking = false
+      setTimeout(() => {
+        isChecking = true
+      }, 200);
       return;
     }
     if (shape != 3) {

@@ -19,6 +19,8 @@ class WebGLRenderer {
 
     // time taken to draw
     var duration = performance.now() - startTime;
-    console.log("numdot:", len, ",ms:",Math.floor(duration), ",fps:",Math.floor(10000/duration)/10,"numdot")
+    // console.log("numdot:", len, ",ms:",Math.floor(duration), ",fps:",Math.floor(10000/duration)/10,"numdot")
+    document.getElementById('perf').innerHTML = "NumDot: " + len + ", Time Taken in rendering: " + Math.floor(duration) + ", fps: " + Math.floor(10000 / duration) / 10 + " numdot";
+
   }
 }
