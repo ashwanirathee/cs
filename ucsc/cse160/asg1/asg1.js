@@ -3,9 +3,9 @@ function withinRange(new_x, new_y){
 }
 
 function addEventListeners() {
-  canvas.onmousedown = click; // func to call on mouse press
   canvas.onmousemove = click;
 
+  // most of these buttons are in global.js
   clear_canvas_button.addEventListener("click", clearCanvas);
   size_change.addEventListener("change", handleSizeChangeEvent);
   segment_count.addEventListener("change", () => {
@@ -37,7 +37,6 @@ function addEventListeners() {
     shape = 3;
     console.log("dinosaur selected");
   });
-
   setup_game_button.addEventListener("click", () => {
     shape = 4;
     console.log("setup_game selected");
@@ -92,14 +91,25 @@ function addEventListeners() {
 }
 
 function init() {
+  // scene graph which holds all the shapes
   scene = new SceneGraph();
+  // render which has the function that actuall renders everything
   renderer = new WebGLRenderer();
 }
 
 function main() {
+  // setup webgl in general
   setupWebGL();
+
+  // connects the variables and setup the GLSL shader 
   connectVariablesToGLSL();
+
+  // setup the scene graph and the renderer
   init();
+
+  // adds the event listeners for various events
   addEventListeners();
+
+  // clear
   clearCanvas();
 }

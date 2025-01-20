@@ -1,52 +1,3 @@
-function generateMaze(width, height) {
-  // Ensure odd dimensions for proper walls
-  width = Math.floor(width / 2) * 2 + 1;
-  height = Math.floor(height / 2) * 2 + 1;
-
-  const maze = Array.from({ length: height }, () => Array(width).fill(1)); // 1 represents walls
-  const stack = [[1, 1]];
-  maze[1][1] = 0; // 0 represents a path
-
-  const directions = [
-    [0, 2],
-    [2, 0],
-    [0, -2],
-    [-2, 0],
-  ]; // Move in grid
-
-  while (stack.length > 0) {
-    const [x, y] = stack[stack.length - 1];
-    const neighbors = [];
-
-    for (const [dx, dy] of directions) {
-      const nx = x + dx;
-      const ny = y + dy;
-      if (nx > 0 && nx < height - 1 && ny > 0 && ny < width - 1 && maze[nx][ny] === 1) {
-        neighbors.push([nx, ny]);
-      }
-    }
-
-    if (neighbors.length > 0) {
-      const [nx, ny] = neighbors[Math.floor(Math.random() * neighbors.length)];
-      maze[(x + nx) / 2][(y + ny) / 2] = 0; // Remove the wall
-      maze[nx][ny] = 0; // Mark as part of the maze
-      stack.push([nx, ny]);
-    } else {
-      stack.pop();
-    }
-  }
-
-  // Define starting and ending points
-  maze[1][1] = 0; // Start point at the top-left corner
-  maze[height - 2][width - 2] = 0; // End point at the bottom-right corner
-
-  return maze;
-}
-
-function printMaze(maze) {
-  console.log(maze.map((row) => row.map((cell) => (cell === 1 ? "██" : "  ")).join("")).join("\n"));
-}
-
 class Game {
   constructor() {
     this.rows = 15;
@@ -114,4 +65,53 @@ class Game {
       gl.drawArrays(gl.POINTS, 0, 2);
     }
   }
+}
+
+function generateMaze(width, height) {
+  // Ensure odd dimensions for proper walls
+  width = Math.floor(width / 2) * 2 + 1;
+  height = Math.floor(height / 2) * 2 + 1;
+
+  const maze = Array.from({ length: height }, () => Array(width).fill(1)); // 1 represents walls
+  const stack = [[1, 1]];
+  maze[1][1] = 0; // 0 represents a path
+
+  const directions = [
+    [0, 2],
+    [2, 0],
+    [0, -2],
+    [-2, 0],
+  ]; // Move in grid
+
+  while (stack.length > 0) {
+    const [x, y] = stack[stack.length - 1];
+    const neighbors = [];
+
+    for (const [dx, dy] of directions) {
+      const nx = x + dx;
+      const ny = y + dy;
+      if (nx > 0 && nx < height - 1 && ny > 0 && ny < width - 1 && maze[nx][ny] === 1) {
+        neighbors.push([nx, ny]);
+      }
+    }
+
+    if (neighbors.length > 0) {
+      const [nx, ny] = neighbors[Math.floor(Math.random() * neighbors.length)];
+      maze[(x + nx) / 2][(y + ny) / 2] = 0; // Remove the wall
+      maze[nx][ny] = 0; // Mark as part of the maze
+      stack.push([nx, ny]);
+    } else {
+      stack.pop();
+    }
+  }
+
+  // Define starting and ending points
+  maze[1][1] = 0; // Start point at the top-left corner
+  maze[height - 2][width - 2] = 0; // End point at the bottom-right corner
+
+  return maze;
+}
+
+function printMaze(maze) {
+  console.log(maze.map((row) => row.map((cell) => (cell === 1 ? "██" : "  ")).join("")).join("\n"));
 }

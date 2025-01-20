@@ -10,7 +10,7 @@ function setupWebGL() {
   canvas = document.getElementById("webgl_canvas");
   // console.log("Trying to get rendering context")
   // Get the rendering context for WebGL
-  gl = getWebGLContext(canvas, { preserveDrawingBuffer: true });
+  gl = canvas.getContext("webgl", { preserveDrawingBuffer: true });
   if (!gl) {
     console.log("Failed to get the rendering context for WebGL");
     return;
@@ -58,6 +58,8 @@ function click(ev) {
     scene.shapesList.push(game);
     shape = 10;
   } else if (shape < 4) {
+    // to check if there is motion and mouse button is down
+
     let [x, y] = convertCoordinatesEventToGL(ev);
     var point;
     if (shape == 0) {
