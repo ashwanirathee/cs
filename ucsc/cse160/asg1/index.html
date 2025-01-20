@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Assignment 1</title>
+
+</head>
+<style>
+  canvas {
+    background-color: black;
+    border: 1px solid #ccc;
+  }
+    .container {
+      display: flex;
+      justify-content: space-between; /* Adjusts spacing between items */
+      gap: 20px; /* Space between divs */
+    }
+
+    .box {
+      flex: 1; /* Equal width for both boxes */
+      padding: 2px;
+      /* border: 2px solid #333; */
+      text-align: center;
+    }
+
+    .box:first-child {
+      /* background-color: #f4a261; */
+    }
+
+    .box:last-child {
+      /* background-color: #2a9d8f; */
+    }
+</style>
+
+<body onload="main()">
+
+  <p>Assignment 1 submission:
+    name: ashwani rathee and email: arathee1@ucsc.edu </p>
+    <div class="container">
+      <div class="box">  <canvas id="webgl_canvas" width="400" height="400">
+        Please use a browser that supports "canvas"
+      </canvas></div>
+      <div class="box"><img src="./picture.jpg" width="400" height="400"></div>
+    </div>
+
+  <br>
+  <button id="clear_canvas">Clear Canvas</button>
+
+  <p>Drawing Mode:</p>
+  <button id="square_choice">Squares</button>
+  <button id="triangles_choice">Triangles</button>
+  <button id="circles_choice">Circles</button>
+  <button id="dinosaur">Dinosaur</button>
+  <button id="setup_game">setup_game</button>
+  <div>
+    <label for="red_val">Red: </label>
+    <input type="range" min="0" max="10" value="1" id="red_val">
+    <label for="green_val">Green: </label>
+    <input type="range" min="0" max="10" value="1" id="green_val">
+    <label for="blue_val">Blue: </label>
+    <input type="range" min="0" max="10" value="1" id="blue_val">
+    <br>
+    <label for="shape_size">Shape Size: </label>
+    <input type="range" min="5" max="20" value="5" id="shape_size">
+    <label for="circle_segment_count">Circle Segment Count: </label>
+    <input type="range" min="3" max="20" value="10" id="circle_segment_count">
+  </div>
+  <p>
+    I include the conditions mentioned in the assignment, 
+    <ol>
+      <li>For each paint brush type: select the brush, size, color. Default are already set, you can just get started.</li>
+      <li>For drawing a picture case, I drew the chrome dinosaur and I paint it with triangles. Click on the dinosaur button and then click on the canvas anywhere it would show the dinosaur.</li>
+      <li>For creativity part, select setup game and click on canvas. It will setup an arbitary maze and you as a player are gray box and you are supposed to reach at red box using keys w,a,s,d which are up,left,down,right respectively. If you do, let me know what you see! Also do ClearCanvas after the game is done to clear it out.</li>
+    </ol>
+  </p>
+  <script src="./lib/webgl-utils.js"></script>
+  <script src="./lib/webgl-debug.js"></script>
+  <script src="./lib/cuon-matrix-cse160.js"></script>
+  <script src="./lib/cuon-utils.js"></script>
+
+  <script src="./lib/renderer.js"></script>
+  <script src="./lib/global.js"></script>
+  <script src="./lib/shaders.js"></script>
+  <script src="./lib/custom-utils.js"></script>
+  <script src="./lib/scene.js"></script>
+  <script src="./lib/point.js"></script>
+  <script src="./lib/triangle.js"></script>
+  <script src="./lib/circle.js"></script>
+  <script src="./lib/dinosaur.js"></script>
+  <script src="./lib/game.js"></script>
+  <script src="asg1.js"></script>
+</body>
+
+</html>

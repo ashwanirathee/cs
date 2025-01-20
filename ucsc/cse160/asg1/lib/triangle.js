@@ -1,18 +1,30 @@
 class Triangle {
-  constructor() {}
+  constructor(vertices, color, size) {
+    this.type = "triangle";
+    this.vertices = vertices;
+    this.color = color;
+    this.size = size;
+  }
 
   render(a_Position, a_Size, u_FragColor) {
-    console.log("I need to learn how to render myself");
-
-    var xy = this.loc;
-    var rgba = this.color;
-    var size = this.size;
-    // Pass the position of a point to a_Position variable
-    gl.vertexAttrib3f(a_Position, xy[0], xy[1], 0.0);
-    gl.uniform1f(a_Size, size);
-    // Pass the color of a point to u_FragColor variable
-    gl.uniform4f(u_FragColor, rgba[0], rgba[1], rgba[2], rgba[3]);
-    // Draw
-    gl.drawArrays(gl.POINTS, 0, 1);
+    gl.uniform4f(u_FragColor, this.color[0], this.color[1], this.color[2], this.color[3]);
+    gl.uniform1f(a_Size, this.size);
+    var d = this.size / 20.0;
+    drawTriangle([this.vertices[0], this.vertices[1], this.vertices[0] + d, this.vertices[1], this.vertices[0], this.vertices[1] + d]);
   }
+}
+
+function drawTriangle(vertices) {
+  var n = 3;
+  var vertexBuffer1 = gl.createBuffer();
+  if (!vertexBuffer1) {
+    console.log("Failed to create the buffer object");
+    return -1;
+  }
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer1);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.DYNAMIC_DRAW);
+  gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
+  gl.enableVertexAttribArray(a_Position);
+  gl.drawArrays(gl.TRIANGLES, 0, n);
 }

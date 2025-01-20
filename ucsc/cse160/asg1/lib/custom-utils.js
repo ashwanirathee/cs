@@ -8,14 +8,14 @@ function clearCanvas() {
 function setupWebGL() {
   // Retrieve <canvas> element
   canvas = document.getElementById("webgl_canvas");
-
+  // console.log("Trying to get rendering context")
   // Get the rendering context for WebGL
-  gl = getWebGLContext(canvas);
+  gl = getWebGLContext(canvas, { preserveDrawingBuffer: true });
   if (!gl) {
     console.log("Failed to get the rendering context for WebGL");
     return;
   }
-  console.log(gl);
+  // console.log(gl);
 }
 
 function connectVariablesToGLSL() {
@@ -51,11 +51,54 @@ function handleSizeChangeEvent() {
 
 function click(ev) {
   if (ev.buttons != 1) return;
-  let [x, y] = convertCoordinatesEventToGL(ev);
-
-  var Point1 = new Point([x, y], [red_val, green_val, blue_val, 1.0], size_val);
-  scene.shapesList.push(Point1);
+  // console.log(scene);
+  if (shape == 4) {
+    clearCanvas();
+    var game = new Game();
+    scene.shapesList.push(game);
+    shape = 10;
+  } else if (shape < 4) {
+    let [x, y] = convertCoordinatesEventToGL(ev);
+    var point;
+    if (shape == 0) {
+      point = new Point();
+    } else if (shape == 1) {
+      point = new Triangle();
+    } else if (shape == 2) {
+      point = new Circle();
+    } else {
+      var special_point = new Dinosaur();
+      special_point.vertices = [x, y];
+      special_point.color = [red_val, green_val, blue_val, 1.0];
+      special_point.size = size_val;
+      special_point.render();
+      return;
+    }
+    if (shape != 3) {
+      scene.shapesList.push(point);
+      point.vertices = [x, y];
+      point.color = [red_val, green_val, blue_val, 1.0];
+      point.size = size_val;
+      if (shape == 2) {
+        point.segment_count = segment_count_val;
+      }
+    }
+  }
+  // console.log("Calling render");
   renderAllShapes();
+}
+
+function convertCoordinates(ev) {
+  var x = ev.clientX; // x coordinate of a mouse pointer
+  var y = ev.clientY; // y coordinate of a mouse pointer
+  var rect = ev.target.getBoundingClientRect();
+  x1 = (x - 30 - rect.left - canvas.width / 2) / (canvas.width / 2);
+  y1 = (canvas.height / 2 - (y - rect.top)) / (canvas.height / 2);
+  x2 = (x + 30 - rect.left - canvas.width / 2) / (canvas.width / 2);
+  y2 = (canvas.height / 2 - (y - rect.top)) / (canvas.height / 2);
+  x3 = (x - rect.left - canvas.width / 2) / (canvas.width / 2);
+  y3 = (canvas.height / 2 - (y - 30 - rect.top)) / (canvas.height / 2);
+  return [x1, y1, x2, y2, x3, y3];
 }
 
 function convertCoordinatesEventToGL(ev) {
