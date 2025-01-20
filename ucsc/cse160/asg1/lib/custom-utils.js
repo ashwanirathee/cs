@@ -72,6 +72,7 @@ function click(ev) {
       special_point.color = [red_val, green_val, blue_val, 1.0];
       special_point.size = size_val;
       special_point.render();
+      return;
     }
     if (shape != 3) {
       scene.shapesList.push(point);

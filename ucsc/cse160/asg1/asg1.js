@@ -1,3 +1,7 @@
+function withinRange(new_x, new_y){
+  return new_x >= 0 && new_y >= 0 && new_x < 18 && new_y < 18
+}
+
 function addEventListeners() {
   canvas.onmousedown = click; // func to call on mouse press
   canvas.onmousemove = click;
@@ -44,38 +48,38 @@ function addEventListeners() {
     var oY;
     switch(event.key) {
       case 'w':
-        console.log('W key pressed');
+        // console.log('W key pressed');
         // Add your logic for W key here
         oX = 0;
         oY = 1;
-        if(shape == 10){
+        if(shape == 10 && withinRange(scene.shapesList[0].player[0]+oX, scene.shapesList[0].player[1]+oY) && scene.shapesList[0].maze[scene.shapesList[0].player[0]+oX][scene.shapesList[0].player[1]+oY] != 1){
           scene.shapesList[0].player = [scene.shapesList[0].player[0]+oX, scene.shapesList[0].player[1]+oY]
           renderAllShapes();
         }
         break;
       case 'a':
-        console.log('A key pressed');
+        // console.log('A key pressed');
         oX = -1;
         oY = 0;
-        if(shape == 10){
+        if(shape == 10  && withinRange(scene.shapesList[0].player[0]+oX, scene.shapesList[0].player[1]+oY) && scene.shapesList[0].maze[scene.shapesList[0].player[0]+oX][scene.shapesList[0].player[1]+oY] != 1){
           scene.shapesList[0].player = [scene.shapesList[0].player[0]+oX, scene.shapesList[0].player[1]+oY]
           renderAllShapes();
         }
         break;
       case 's':
-        console.log('S key pressed');
+        // console.log('S key pressed');
         oX = 0;
         oY = -1;
-        if(shape == 10){
+        if(shape == 10 && withinRange(scene.shapesList[0].player[0]+oX, scene.shapesList[0].player[1]+oY) && scene.shapesList[0].maze[scene.shapesList[0].player[0]+oX][scene.shapesList[0].player[1]+oY] != 1){
           scene.shapesList[0].player = [scene.shapesList[0].player[0]+oX, scene.shapesList[0].player[1]+oY]
           renderAllShapes();
         }
         break;
       case 'd':
-        console.log('D key pressed');
+        // console.log('D key pressed');
         oX = 1;
         oY = 0;
-        if(shape == 10){
+        if(shape == 10 && withinRange(scene.shapesList[0].player[0]+oX, scene.shapesList[0].player[1]+oY) && scene.shapesList[0].maze[scene.shapesList[0].player[0]+oX][scene.shapesList[0].player[1]+oY] != 1){
           scene.shapesList[0].player = [scene.shapesList[0].player[0]+oX, scene.shapesList[0].player[1]+oY]
           renderAllShapes();
         }

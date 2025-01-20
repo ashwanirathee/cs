@@ -1,6 +1,5 @@
 class WebGLRenderer {
   constructor() {
-    // this.shapesList = [];
   }
 
   render(scene) {
