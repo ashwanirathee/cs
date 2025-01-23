@@ -30,12 +30,12 @@ function connectVariablesToGLSL() {
     console.log("Failed to get the storage location of a_Position");
     return;
   }
-  // // Get the storage location of a_Position
-  a_Size = gl.getUniformLocation(gl.program, "a_Size");
-  if (a_Size < 0) {
-    console.log("Failed to get the storage location of a_Size");
-    return;
-  }
+  // // // Get the storage location of a_Position
+  // a_Size = gl.getUniformLocation(gl.program, "a_Size");
+  // if (a_Size < 0) {
+  //   console.log("Failed to get the storage location of a_Size");
+  //   return;
+  // }
 
   // Get the storage location of u_FragColor
   u_FragColor = gl.getUniformLocation(gl.program, "u_FragColor");
@@ -43,6 +43,21 @@ function connectVariablesToGLSL() {
     console.log("Failed to get the storage location of u_FragColor");
     return;
   }
+
+  u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
+  if(!u_ModelMatrix){
+    console.log('Failed to get the storage location of u_ModelMatrix')
+    return;
+  }
+
+  u_GlobalRotateMatrix = gl.getUniformLocation(gl.program, 'u_GlobalRotateMatrix');
+  if(!u_GlobalRotateMatrix){
+    console.log('Failed to get the storage location of u_GlobalRotateMatrix')
+    return;
+  }
+
+  var identityM = new Matrix4();
+  gl.uniformMatrix4fv(u_ModelMatrix, false, identityM.elements);
 }
 
 function handleSizeChangeEvent() {
@@ -119,6 +134,5 @@ function convertCoordinatesEventToGL(ev) {
 }
 
 function renderAllShapes() {
-  print("Trying to render")
   renderer.render(scene); // i will add camera here later.
 }

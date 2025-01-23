@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Assignment 1</title>
+
+</head>
+<style>
+  canvas {
+    background-color: black;
+    border: 1px solid #ccc;
+  }
+    .container {
+      display: flex;
+      justify-content: space-between; /* Adjusts spacing between items */
+      gap: 20px; /* Space between divs */
+    }
+
+    .box {
+      flex: 1; /* Equal width for both boxes */
+      padding: 2px;
+      /* border: 2px solid #333; */
+      text-align: center;
+    }
+
+    .box:first-child {
+      /* background-color: #f4a261; */
+    }
+
+    .box:last-child {
+      /* background-color: #2a9d8f; */
+    }
+</style>
+
+<body onload="main()">
+    <div class="container">
+      <div class="box">  <canvas id="webgl_canvas" width="400" height="400">
+        Please use a browser that supports "canvas"
+      </canvas></div>
+    </div>
+    <p>
+      Camera Angle
+      <input type="range" min="0" max="90" value="5" id="angleSlide">
+    </p>
+
+  <br>
+  <script src="./../lib/webgl-utils.js"></script>
+  <script src="./../lib/webgl-debug.js"></script>
+  <script src="./../lib/cuon-matrix-cse160.js"></script>
+  <script src="./../lib/cuon-utils.js"></script>
+
+  <script src="./../lib/renderer.js"></script>
+  <script src="./../lib/global.js"></script>
+  <script src="./../lib/shaders.js"></script>
+  <script src="./../lib/custom-utils.js"></script>
+  <script src="./../lib/scene.js"></script>
+  <script src="./../lib/point.js"></script>
+  <script src="./../lib/triangle.js"></script>
+  <script src="./../lib/circle.js"></script>
+  <script src="./../lib/cube.js"></script>
+  <script src="./../lib/dinosaur.js"></script>
+  <script src="./../lib/game.js"></script>
+  <script src="asg2.js"></script>
+</body>
+
+</html>
