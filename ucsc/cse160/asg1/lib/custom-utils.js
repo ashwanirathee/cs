@@ -119,6 +119,6 @@ function convertCoordinatesEventToGL(ev) {
 }
 
 function renderAllShapes() {
-  print("Trying to render")
+  // print("Trying to render")
   renderer.render(scene); // i will add camera here later.
 }
