@@ -16,6 +16,7 @@ function setupWebGL() {
     return;
   }
   // console.log(gl);
+  gl.enable(gl.DEPTH_TEST)
 }
 
 function connectVariablesToGLSL() {
