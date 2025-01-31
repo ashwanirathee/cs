@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Assignment 1</title>
+
+</head>
+<style>
+  canvas {
+    background-color: black;
+    border: 1px solid #ccc;
+  }
+    .container {
+      display: flex;
+      justify-content: space-between; /* Adjusts spacing between items */
+      gap: 20px; /* Space between divs */
+    }
+
+    .box {
+      flex: 1; /* Equal width for both boxes */
+      padding: 2px;
+      /* border: 2px solid #333; */
+      text-align: center;
+    }
+
+    .box:first-child {
+      /* background-color: #f4a261; */
+    }
+
+    .box:last-child {
+      /* background-color: #2a9d8f; */
+    }
+</style>
+
+<body onload="main()">
+    <div class="container">
+      <div class="box">  <canvas id="webgl_canvas" width="400" height="400">
+        Please use a browser that supports "canvas"
+      </canvas></div>
+    </div>
+    <p id="perf">perfstats:</p>
+    <p>
+      Camera Angle
+      <input type="range" min="0" max="360" value="5" id="angleSlideX">
+
+    </p>
+    <input type="range" min="0" max="90" value="0" id="angleSlideY">
+    <input type="range" min="0" max="360" value="60" id="angleSlideZ">
+    <p>
+      Yellow Slider
+      <input type="range" min="-90" max="90" value="5" id="g_yellowAngle">
+      Animation:
+      <button type="button" id="animationYellowOnButton">ON</button>
+      <button type="button" id="animationYellowOffButton">OFF</button>
+    </p>
+    <p>
+      Magenta Slider
+      <input type="range" min="-90" max="90" value="5" id="g_magentaAngle">
+      Animation:
+      <button type="button" id="animationMagentaOnButton">ON</button>
+      <button type="button" id="animationMagentaOffButton">OFF</button>
+    </p>
+
+
+    <label for="body_angle_html">Body Angle:</label>
+    <input type="range" min="-90" max="90" value="0" id="body_angle_html" oninput="updateValue('body_angle_html', 'body', 'body_angle_value')">
+    <span id="body_angle_value">0</span>
+    <br>
+
+    <label for="neck_angle_html">Neck Angle:</label>
+    <input type="range" min="-45" max="0" value="-45" id="neck_angle_html" oninput="updateValue('neck_angle_html', 'neck', 'neck_angle_value')">
+    <span id="neck_angle_value">0</span>
+    <br>
+
+    <label for="face_angle_html">Face Angle:</label>
+    <input type="range" min="85" max="95" value="90" id="face_angle_html" oninput="updateValue('face_angle_html', 'face', 'face_angle_value')">
+    <span id="face_angle_value">0</span>
+    <br>
+
+    <label for="tail_angle_html">Tail Angle:</label>
+    <input type="range" min="0" max="120" value="20" id="tail_angle_html" oninput="updateValue('tail_angle_html', 'tail', 'tail_angle_value')">
+    <span id="tail_angle_value">0</span>
+    <br>
+
+    <label for="leg_front_left_angle_html">Front Left Leg Angle:</label>
+    <input type="range" min="-15" max="15" value="0" id="leg_front_left_angle_html" oninput="updateValue('leg_front_left_angle_html', 'leg_front_left', 'leg_front_left_angle_value')">
+    <span id="leg_front_left_angle_value">0</span>
+    <br>
+
+    <label for="leg_front_right_angle_html">Front Right Leg Angle:</label>
+    <input type="range" min="-15" max="15" value="0" id="leg_front_right_angle_html" oninput="updateValue('leg_front_right_angle_html', 'leg_front_right', 'leg_front_right_angle_value')">
+    <span id="leg_front_right_angle_value">0</span>
+    <br>
+
+    <label for="leg_rear_left_angle_html">Rear Left Leg Angle:</label>
+    <input type="range" min="-15" max="15" value="0" id="leg_rear_left_angle_html" oninput="updateValue('leg_rear_left_angle_html', 'leg_rear_left', 'leg_rear_left_angle_value')">
+    <span id="leg_rear_left_angle_value">0</span>
+    <br>
+
+    <label for="leg_rear_right_angle_html">Rear Right Leg Angle:</label>
+    <input type="range" min="-15" max="15" value="0" id="leg_rear_right_angle_html" oninput="updateValue('leg_rear_right_angle_html', 'leg_rear_right', 'leg_rear_right_angle_value')">
+    <span id="leg_rear_right_angle_value">0</span>
+    <br>
+
+  <script src="./../lib/webgl-utils.js"></script>
+  <script src="./../lib/webgl-debug.js"></script>
+  <script src="./../lib/cuon-matrix-cse160.js"></script>
+  <script src="./../lib/cuon-utils.js"></script>
+
+  <script src="./../lib/renderer.js"></script>
+  <script src="./../lib/global.js"></script>
+  <script src="./../lib/shaders.js"></script>
+  <script src="./../lib/custom-utils.js"></script>
+  <script src="./../lib/scene.js"></script>
+  <script src="./../lib/point.js"></script>
+  <script src="./../lib/triangle.js"></script>
+  <script src="./../lib/circle.js"></script>
+  <script src="./../lib/cube.js"></script>
+  <script src="./../lib/dinosaur.js"></script>
+  <script src="./../lib/game.js"></script>
+  <script src="asg2.js"></script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+
+</html>

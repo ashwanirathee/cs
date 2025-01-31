@@ -64,51 +64,51 @@ function connectVariablesToGLSL() {
 function handleSizeChangeEvent() {
   size_val = shape_size.value;
 }
+// Function to reset the initial position when the mouse button is released
+function onMouseUp(ev) {
+  initialX = null;
+  initialY = null;
+}
 
-var isChecking = true;
+// Variables to store the initial mouse position
+let initialX = null;
+let initialY = null;
+
+
 function click(ev) {
-  if(isChecking == false) return;
+  // if(isChecking == false) return;
   if (ev.buttons != 1) return;
-  // console.log(scene);
-  if (shape == 4) {
-    clearCanvas();
-    var game = new Game();
-    scene.shapesList.push(game);
-    shape = 10;
-  } else if (shape < 4) {
-    // to check if there is motion and mouse button is down
+  // Convert the event coordinates to WebGL coordinates
+  let [x, y] = convertCoordinatesEventToGL(ev);
 
-    let [x, y] = convertCoordinatesEventToGL(ev);
-    var point;
-    if (shape == 0) {
-      point = new Point();
-    } else if (shape == 1) {
-      point = new Triangle();
-    } else if (shape == 2) {
-      point = new Circle();
-    } else {
-      var special_point = new Dinosaur();
-      special_point.vertices = [x, y];
-      special_point.color = [red_val, green_val, blue_val, 1.0];
-      special_point.size = size_val;
-      special_point.render();
-      isChecking = false
-      setTimeout(() => {
-        isChecking = true
-      }, 200);
-      return;
-    }
-    if (shape != 3) {
-      scene.shapesList.push(point);
-      point.vertices = [x, y];
-      point.color = [red_val, green_val, blue_val, 1.0];
-      point.size = size_val;
-      if (shape == 2) {
-        point.segment_count = segment_count_val;
-      }
-    }
+  // If this is the start of the drag, store the initial position
+  if (initialX === null || initialY === null) {
+    initialX = x;
+    initialY = y;
   }
-  // console.log("Calling render");
+
+  // Calculate the difference between the current and initial positions
+  let deltaX = x - initialX;
+  let deltaY = y - initialY;
+
+  if(Math.abs(deltaY) > Math.abs(deltaX)){
+
+    g_globalAngleY += deltaY*50;
+  } else {
+    // Update the global angles based on the difference
+    g_globalAngleX -= deltaX*50;
+  }
+
+
+
+  // Log the changes (optional)
+  // console.log(`Delta X: ${deltaX}, Delta Y: ${deltaY}`);
+
+  // Update the initial position to the current position for the next iteration
+  initialX = x;
+  initialY = y;
+
+
   renderAllShapes();
 }
 
