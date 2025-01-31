@@ -743,6 +743,7 @@ class Matrix4 {
      * @param z The Z coordinate of vector of rotation axis.
      * @return this
      */
+    
     rotate = function(angle, x, y, z) {
       return this.concat(new Matrix4().setRotate(angle, x, y, z));
     };
