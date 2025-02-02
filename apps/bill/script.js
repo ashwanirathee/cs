@@ -1,5 +1,6 @@
 let text_input;
 const regex = /^(\d+\.\d+),\[(.*?)\];$/;
+var rent_input;
 
 function handleCalculateEvent() {
   console.log("Calculation Started");
@@ -70,8 +71,46 @@ function handleCalculateEvent() {
   document.getElementById("output").textContent = result;
 }
 
+function handleRentCalculateEvent() {
+  const inputText = rent_input.value;
+  // console.log(inputText)
+  // Validate input format using regex
+  const regex = /^(\d+(\.\d+)?),\[(\d+(\.\d+)?(,\d+(\.\d+)?)*)\];$/;
+  const match = inputText.match(regex);
+
+  if (!match) {
+    document.getElementById("rent_bill").innerHTML = "Invalid input format. Use: x,[part1,part2,...]";
+    return;
+  }
+
+  // Extract x and parts array
+  const x = parseFloat(match[1]);
+  const parts = match[3].split(",").map(Number); // Convert to an array of numbers
+  // console.log(x)
+  /// console.log(parts)
+  // Compute total allocated and remaining amount
+  const totalAllocated = parts.reduce((sum, part) => sum + part, 0);
+  const remaining = x - totalAllocated;
+  const perPartShare = remaining / parts.length;
+
+  // Adjust each part
+  const adjustedParts = parts.map((part) => part + perPartShare);
+
+  // Generate output
+  let resultHTML = `<strong>Initial Parts:</strong> ${parts.join(", ")}<br>`;
+  resultHTML += `<strong>Total Allocated:</strong> ${totalAllocated.toFixed(2)}<br>`;
+  resultHTML += `<strong>Remaining Amount:</strong> ${remaining.toFixed(2)}<br>`;
+  resultHTML += `<strong>Final Adjusted Parts:</strong> ${adjustedParts.map((p) => p.toFixed(2)).join(", ")}<br>`;
+
+  document.getElementById("rent_bill").innerHTML = resultHTML;
+}
+
 function main() {
   text_input = document.querySelector("textarea");
   bill_calc = document.getElementById("bill_calc_button");
   bill_calc.addEventListener("click", handleCalculateEvent);
+
+  rent_input = document.getElementById("rent_bill_textarea");
+  rent_bill_calc = document.getElementById("rent_bill_calc_button");
+  rent_bill_calc.addEventListener("click", handleRentCalculateEvent);
 }

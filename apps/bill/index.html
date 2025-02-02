@@ -1,24 +1,62 @@
 <!DOCTYPE html>
 <html>
-    <head>
 
-    </head>
-    <body onload="main()">
-        This is ashwani's bill calculator, way it works is you put the money for 108c, type of divide like[1,2,3,4] if ash,chi,shu,jam are involved and if just ash,chi are involved then put [1,2]:
-        <ol>
-            <li>ash</li>
-            <li>chi</li>
-            <li>shu</li>
-            <li>jam</li>
-            <li>ved</li>
-            <li>soham</li>
-        </ol>
-        <div>
-            <textarea rows="30" cols="50" placeholder="Enter your text here"></textarea>
+<head>
+    <style>
+        .container {
+            display: flex;
+            gap: 10px;
+            /* Space between columns */
+        }
+
+        .column {
+            flex: 1;
+            /* Equal width columns */
+            padding: 20px;
+            /* background-color: lightblue; */
+            border: 1px solid black;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body onload="main()">
+    <div class="container">
+        <div class="column">
+            <p>
+                This is ashwani's bill calculator, way it works is you put the money for 108c, type of divide
+                like[1,2,3,4] if ash,chi,shu,jam are involved and if just ash,chi are involved then put [1,2]:
+            </p>
+            <ol>
+                <li>ash</li>
+                <li>chi</li>
+                <li>shu</li>
+                <li>jam</li>
+                <li>ved</li>
+                <li>soham</li>
+            </ol>
+            <div>
+                <textarea rows="30" cols="50" placeholder="Enter your text here"></textarea>
+            </div>
+            <button id="bill_calc_button">calculate</button>
+            <pre id="output"></pre>
+
         </div>
-        <button id="bill_calc_button">calculate</button>
-        <pre id="output"></pre>
+        <div class="column">
+            <p>
+                Rent Calculator(Give 13123.123, not 13,123.123)(x,[part1,...partn];)
+            </p>
+            <textarea type="text" id="rent_bill_textarea" rows="2" cols="100"
+                placeholder="Total Rent+Utilities Bill here"></textarea>
+            <br>
+            <button id="rent_bill_calc_button">calculate</button>
+            <pre id="rent_bill"></pre>
+        </div>
+        <div class="column">Column 3</div>
+    </div>
 
-        <script src="script.js"></script>
-    </body>
+
+    <script src="script.js"></script>
+</body>
+
 </html>
