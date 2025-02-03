@@ -32,6 +32,7 @@
 - <a href="https://edstem.org/us/courses/71554/discussion/6078915" style="color: inherit; text-decoration: underline;">Prof Sesh's ed discussion</a>
 - <a href="https://www.santacruzpl.org/services/wireless-printing/" style="color: inherit; text-decoration: underline;">SC public library print service</a>
 - <a href="https://drive.google.com" style="color: inherit; text-decoration: underline;">Google drive</a>
-
+- <a href="https://canvas.ucsc.edu/courses/78931" style="color: inherit; text-decoration: underline;">Prof James's course page</a>
+- <a href="https://piazza.com/class" style="color: inherit; text-decoration: underline;">Prof James's piazza </a>
 #### References:
 - PPM files are from here: <a href="https://www.cs.cornell.edu/courses/cs664/2003fa/images/" style="color: inherit; text-decoration: underline;">sample images</a>
