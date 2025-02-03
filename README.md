@@ -27,7 +27,6 @@
 #### Links:
 - <a href="https://canvas.ucsc.edu" style="color: inherit; text-decoration: underline;">canvas</a>
 -  <a href="https://github.com/ashwanirathee" style="color: inherit; text-decoration: underline;">ash's github</a>
-- <a href="https://github.com/ashwanirathee" style="color: inherit; text-decoration: underline;">ash's github</a>
 - <a href="https://users.soe.ucsc.edu/~sesh/" style="color: inherit; text-decoration: underline;">Prof Sesh's webpage</a>
 - <a href="https://users.soe.ucsc.edu/~sesh/Teaching/2025/CSE201/index.html" style="color: inherit; text-decoration: underline;">Prof Sesh's class webpage</a>
 - <a href="https://edstem.org/us/courses/71554/discussion/6078915" style="color: inherit; text-decoration: underline;">Prof Sesh's ed discussion</a>
