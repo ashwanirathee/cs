@@ -78,11 +78,14 @@ let initialY = null;
 function click(ev) {
   // if(isChecking == false) return;
   if (ev.buttons != 1) return;
+  // console.log("We noticed something!")
   // Convert the event coordinates to WebGL coordinates
   let [x, y] = convertCoordinatesEventToGL(ev);
+  x = parseFloat(x) || 0;
+  y = parseFloat(y) || 0;
 
   // If this is the start of the drag, store the initial position
-  if (initialX === null || initialY === null) {
+  if (initialX === null || isNaN(initialX) || initialY === null || isNaN(initialY)) {
     initialX = x;
     initialY = y;
   }
@@ -90,15 +93,29 @@ function click(ev) {
   // Calculate the difference between the current and initial positions
   let deltaX = x - initialX;
   let deltaY = y - initialY;
-
-  if(Math.abs(deltaY) > Math.abs(deltaX)){
-
-    g_globalAngleY += deltaY*50;
-  } else {
-    // Update the global angles based on the difference
-    g_globalAngleX -= deltaX*50;
+  // console.log(g_globalAngleY," ", g_globalAngleX)
+  if (!isNaN(deltaX) && !isNaN(deltaY)) {
+    if (Math.abs(deltaY) > Math.abs(deltaX)) {
+      g_globalAngleY += deltaY * 50;
+      g_globalAngleY = Math.max(0, Math.min(360, Math.floor(g_globalAngleY))); // Limit between 0 and 360
+    } else {
+      g_globalAngleX -= deltaX * 50;
+      g_globalAngleX = Math.max(0, Math.min(360, Math.floor(g_globalAngleX))); // Limit between 0 and 360
+    }
   }
 
+  if(!isNaN(g_globalAngleX)){
+    angleSlideX_component.value = g_globalAngleX;
+    
+  } else {
+    g_globalAngleX = angleSlideX_component.value
+  }
+  if(!isNaN(g_globalAngleY)) {
+    angleSlideY_component.value = g_globalAngleY;
+  } else {
+    g_globalAngleY = angleSlideY_component.value
+  }
+  // console.log(g_globalAngleY," ", g_globalAngleX)
 
 
   // Log the changes (optional)

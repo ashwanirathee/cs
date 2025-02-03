@@ -327,7 +327,7 @@ class WebGLRenderer {
 
     // time taken to draw
     var duration = performance.now() - startTime;
-    document.getElementById("perf").innerHTML = "Time Taken in rendering: " + Math.floor(duration) + ", fps: " + Math.floor(10000 / duration) / 10 + " numdot";
+    document.getElementById("perf").innerHTML = "Time Taken in rendering: " + duration.toFixed(3)  + " ms, fps: " + (1000 / duration).toFixed(2)+ "";
   }
 }
 

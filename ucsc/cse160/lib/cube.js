@@ -22,18 +22,17 @@ class Cube {
         0.0,0.0,1.0, 1.0,1.0,1.0, 1.0,0.0,1.0
       ];
   
-
       this.vertices = new Float32Array(v);
     }
 
-    render() {
-      gl.uniformMatrix4fv(u_ModelMatrix, false, this.matrix.elements);
-      gl.uniform4f(u_FragColor, ...this.color);
-
+    drawCube(M, color) {
+      gl.uniformMatrix4fv(u_ModelMatrix, false, M.elements);
+      gl.uniform4f(u_FragColor, ...color);
+    
       if (this.vertices === null) {
         this.generateVertices();
       }
-  
+    
       if (this.buffer === null) {
         // Create a buffer object
         this.buffer = gl.createBuffer();
@@ -42,11 +41,16 @@ class Cube {
           return -1;
         }
       }
-  
+    
       gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
       gl.bufferData(gl.ARRAY_BUFFER, this.vertices, gl.DYNAMIC_DRAW);
       gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, 0, 0);
       gl.enableVertexAttribArray(a_Position);
-      gl.drawArrays(gl.TRIANGLES, 0, this.vertices.length/3);
+      gl.drawArrays(gl.TRIANGLES, 0, this.vertices.length / 3);
+    }
+
+    render() {
+      this.drawCube(this.matrix, this.color)
     }
   }
+
