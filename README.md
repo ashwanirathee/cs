@@ -1,4 +1,4 @@
-# cs 
+# cs
 
 #### Rules:
 
@@ -25,14 +25,43 @@
 </details>
 
 #### Links:
+
 - <a href="https://canvas.ucsc.edu" style="color: inherit; text-decoration: underline;">Canvas</a>
--  <a href="https://github.com/ashwanirathee" style="color: inherit; text-decoration: underline;">Ash's github</a>
-- <a href="https://users.soe.ucsc.edu/~sesh/" style="color: inherit; text-decoration: underline;">Prof Sesh's webpage</a>
-- <a href="https://users.soe.ucsc.edu/~sesh/Teaching/2025/CSE201/index.html" style="color: inherit; text-decoration: underline;">Prof Sesh's class webpage</a>
-- <a href="https://edstem.org/us/courses/71554/discussion/6078915" style="color: inherit; text-decoration: underline;">Prof Sesh's ed discussion</a>
+- <a href="https://github.com/ashwanirathee" style="color: inherit; text-decoration: underline;">Ash's github</a>
 - <a href="https://www.santacruzpl.org/services/wireless-printing/" style="color: inherit; text-decoration: underline;">SC public library print service</a>
 - <a href="https://drive.google.com" style="color: inherit; text-decoration: underline;">Google drive</a>
-- <a href="https://canvas.ucsc.edu/courses/78931" style="color: inherit; text-decoration: underline;">Prof James's course page</a>
-- <a href="https://piazza.com/class" style="color: inherit; text-decoration: underline;">Prof James's piazza </a>
+
+#### UCSC Courses
+<details>
+  <summary>CSE 160: Introduction of Computer Graphics</summary>
+<ul>
+<li>
+<a href="https://canvas.ucsc.edu/courses/78931" style="color: inherit; text-decoration: underline;">Prof James's course page</a>
+</li>
+<li>
+<a href="https://piazza.com/class" style="color: inherit; text-decoration: underline;">Prof James's piazza </a>
+</li>
+</ul>
+</details>
+
+<details>
+  <summary>CSE 201: Analysis of Algorithms</summary>
+  <ul>
+  <li>
+  <a href="https://users.soe.ucsc.edu/~sesh/" style="color: inherit; text-decoration: underline;">Prof Sesh's webpage</a>
+  </li>
+  <li>
+  <a href="https://users.soe.ucsc.edu/~sesh/Teaching/2025/CSE201/index.html" style="color: inherit; text-decoration: underline;">Prof Sesh's class webpage</a>
+  </li>
+  <li>
+  <a href="https://edstem.org/us/courses/71554/discussion/6078915" style="color: inherit; text-decoration: underline;">Prof Sesh's ed discussion</a>
+  </li>
+  <li>
+  <a href="https://richardhammack.github.io/BookOfProof/"  style="color: inherit; text-decoration: underline;">Book of Proof for learning how to write proofs</a>
+  </li>
+  <ul>
+</details>
+
 #### References:
+
 - PPM files are from here: <a href="https://www.cs.cornell.edu/courses/cs664/2003fa/images/" style="color: inherit; text-decoration: underline;">sample images</a>
