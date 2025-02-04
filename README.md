@@ -31,7 +31,8 @@
 - <a href="https://www.santacruzpl.org/services/wireless-printing/" style="color: inherit; text-decoration: underline;">SC public library print service</a>
 - <a href="https://drive.google.com" style="color: inherit; text-decoration: underline;">Google drive</a>
 
-#### UCSC Courses
+#### UCSC
+
 <details>
   <summary>CSE 160: Introduction of Computer Graphics</summary>
 <ul>
@@ -58,6 +59,15 @@
   </li>
   <li>
   <a href="https://richardhammack.github.io/BookOfProof/"  style="color: inherit; text-decoration: underline;">Book of Proof for learning how to write proofs</a>
+  </li>
+  <ul>
+</details>
+
+<details>
+  <summary>Miscellaneous</summary>
+  <ul>
+  <li>
+    <a href="https://groups.google.com/a/ucsc.edu/g/tajobs-group" style="color: inherit; text-decoration: underline;"> TA opportunities</a>
   </li>
   <ul>
 </details>
