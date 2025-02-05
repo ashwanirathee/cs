@@ -60,7 +60,7 @@
   <li>
   <a href="https://richardhammack.github.io/BookOfProof/"  style="color: inherit; text-decoration: underline;">Book of Proof for learning how to write proofs</a>
   </li>
-  <ul>
+  </ul>
 </details>
 
 <details>
@@ -72,7 +72,7 @@
   <li>
   <a href="https://pgealerts.alerts.pge.com/outage-tools/outage-map/" style="color: inherit; text-decoration: underline;"> Power Outage Map</a>
   </li>
-  <ul>
+  </ul>
 </details>
 
 #### References:
