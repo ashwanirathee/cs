@@ -69,6 +69,9 @@
   <li>
     <a href="https://groups.google.com/a/ucsc.edu/g/tajobs-group" style="color: inherit; text-decoration: underline;"> TA opportunities</a>
   </li>
+  <li>
+  <a href="https://pgealerts.alerts.pge.com/outage-tools/outage-map/" style="color: inherit; text-decoration: underline;"> Power Outage Map</a>
+  </li>
   <ul>
 </details>
 
