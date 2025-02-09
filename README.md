@@ -72,6 +72,13 @@
   <li>
   <a href="https://pgealerts.alerts.pge.com/outage-tools/outage-map/" style="color: inherit; text-decoration: underline;"> Power Outage Map</a>
   </li>
+  <li>
+  <a href="https://rt.scmetro.org/home" style="color: inherit; text-decoration: underline;"> SC Metro Real Time Maps</a>
+  </li>
+  https://www.scmtd.com/en/routes/schedule/202521/17/wd_ob
+    <li>
+  <a href="https://www.scmtd.com/en/routes/schedule/202521/17/wd_ob" style="color: inherit; text-decoration: underline;"> SC Metro Schedules</a>
+  </li>
   </ul>
 </details>
 
