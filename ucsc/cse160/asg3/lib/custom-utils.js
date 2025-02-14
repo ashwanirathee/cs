@@ -16,7 +16,7 @@ function setupWebGL() {
     return;
   }
   // console.log(gl);
-  gl.enable(gl.DEPTH_TEST)
+  gl.enable(gl.DEPTH_TEST);
 }
 
 function connectVariablesToGLSL() {
@@ -56,37 +56,51 @@ function connectVariablesToGLSL() {
     console.log("Failed to get the storage location of u_whichTexture");
     return;
   }
-  u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
-  if(!u_ModelMatrix){
-    console.log('Failed to get the storage location of u_ModelMatrix')
+  u_ModelMatrix = gl.getUniformLocation(gl.program, "u_ModelMatrix");
+  if (!u_ModelMatrix) {
+    console.log("Failed to get the storage location of u_ModelMatrix");
     return;
   }
 
-  u_GlobalRotateMatrix = gl.getUniformLocation(gl.program, 'u_GlobalRotateMatrix');
-  if(!u_GlobalRotateMatrix){
-    console.log('Failed to get the storage location of u_GlobalRotateMatrix')
+  u_GlobalRotateMatrix = gl.getUniformLocation(gl.program, "u_GlobalRotateMatrix");
+  if (!u_GlobalRotateMatrix) {
+    console.log("Failed to get the storage location of u_GlobalRotateMatrix");
     return;
   }
 
-  u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix');
-  if(!u_ViewMatrix){
-    console.log('Failed to get the storage location of u_ViewMatrix')
+  u_ViewMatrix = gl.getUniformLocation(gl.program, "u_ViewMatrix");
+  if (!u_ViewMatrix) {
+    console.log("Failed to get the storage location of u_ViewMatrix");
     return;
   }
 
-  u_ProjectionMatrix = gl.getUniformLocation(gl.program, 'u_ProjectionMatrix');
-  if(!u_ProjectionMatrix){
-    console.log('Failed to get the storage location of u_ProjectionMatrix')
+  u_ProjectionMatrix = gl.getUniformLocation(gl.program, "u_ProjectionMatrix");
+  if (!u_ProjectionMatrix) {
+    console.log("Failed to get the storage location of u_ProjectionMatrix");
     return;
   }
 
   // Get the storage location of u_Sampler
-  u_Sampler0 = gl.getUniformLocation(gl.program, 'u_Sampler0');
+  u_Sampler0 = gl.getUniformLocation(gl.program, "u_Sampler0");
   if (!u_Sampler0) {
-    console.log('Failed to get the storage location of u_Sampler0');
+    console.log("Failed to get the storage location of u_Sampler0");
     return false;
   }
-  
+
+  // Get the storage location of u_Sampler
+  u_Sampler1 = gl.getUniformLocation(gl.program, "u_Sampler1");
+  if (!u_Sampler1) {
+    console.log("Failed to get the storage location of u_Sampler1");
+    return false;
+  }
+
+  // Get the storage location of u_Sampler
+  u_Sampler2 = gl.getUniformLocation(gl.program, "u_Sampler2");
+  if (!u_Sampler2) {
+    console.log("Failed to get the storage location of u_Sampler2");
+    return false;
+  }
+
   var identityM = new Matrix4();
   gl.uniformMatrix4fv(u_ModelMatrix, false, identityM.elements);
 }
@@ -103,7 +117,6 @@ function onMouseUp(ev) {
 // Variables to store the initial mouse position
 let initialX = null;
 let initialY = null;
-
 
 function click(ev) {
   // if(isChecking == false) return;
@@ -134,19 +147,17 @@ function click(ev) {
     }
   }
 
-  if(!isNaN(g_globalAngleX)){
+  if (!isNaN(g_globalAngleX)) {
     angleSlideX_component.value = g_globalAngleX;
-    
   } else {
-    g_globalAngleX = angleSlideX_component.value
+    g_globalAngleX = angleSlideX_component.value;
   }
-  if(!isNaN(g_globalAngleY)) {
+  if (!isNaN(g_globalAngleY)) {
     angleSlideY_component.value = g_globalAngleY;
   } else {
-    g_globalAngleY = angleSlideY_component.value
+    g_globalAngleY = angleSlideY_component.value;
   }
   // console.log(g_globalAngleY," ", g_globalAngleX)
-
 
   // Log the changes (optional)
   // console.log(`Delta X: ${deltaX}, Delta Y: ${deltaY}`);
@@ -154,7 +165,6 @@ function click(ev) {
   // Update the initial position to the current position for the next iteration
   initialX = x;
   initialY = y;
-
 
   renderAllShapes();
 }

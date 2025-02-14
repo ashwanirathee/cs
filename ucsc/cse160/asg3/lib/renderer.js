@@ -55,30 +55,29 @@ class WebGLRenderer {
     gl.clearColor(...currentColor, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    var floor = new Cube();
-    floor.color = [1.0,0.0,0.0,1.0];
-    floor.textureNum = 0;
-    floor.matrix.translate(0,-0.5,0.0);
-    floor.matrix.scale(10, 0.01, 10);
-    // floor.matrix.translate(-0.5,0,-0.5);
-    floor.render();
+    // var floor = new Cube();
+    // floor.color = [1.0,0.0,0.0,1.0];
+    // floor.textureNum = 0;
+    // floor.matrix.translate(0,-0.5,0.0);
+    // floor.matrix.scale(10, 0.01, 10);
+    // // floor.matrix.translate(-0.5,0,-0.5);
+    // floor.render();
     
 
-    var sky = new Cube();
-    sky.color = [0.0,0.0,1.0,1.0];
-    sky.textureNum = -2;
-    sky.matrix.scale(100, 100, 100);
-    sky.render();
+    // var sky = new Cube();
+    // sky.color = [0.0,0.0,1.0,1.0];
+    // sky.textureNum = -2;
+    // sky.matrix.scale(100, 100, 100);
+    // sky.render();
 
     // draw a cube
     var body = new Cube();
     body.color = [1.0,0.0,0.0,1.0];
-    body.textureNum = 0;
+    body.textureNum = 1;
     body.matrix.scale(1, 1, 1);
     body.render();
 
-
-    this.drawMap();
+    // this.drawMap();
     // time taken to draw
     var duration = performance.now() - startTime;
     document.getElementById("perf").innerHTML = "Time Taken in rendering: " + duration.toFixed(3)  + " ms, fps: " + (1000 / duration).toFixed(2)+ "";

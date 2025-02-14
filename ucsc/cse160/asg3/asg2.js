@@ -111,16 +111,35 @@ function initTextures() {
   // Register the event handler to be called on loading an image
   image.onload = function(){ sendTextureToTEXTURE0(image); };
   // Tell the browser to load an image
-  image.src = './lib/dice.png';
+  image.src = './lib/uvCoords.png';
 
+  var image1 = new Image();  // Create the image object
+  if (!image1) {
+    console.log('Failed to create the image object');
+    return false;
+  }
+  // Register the event handler to be called on loading an image
+  image1.onload = function(){ sendTextureToTEXTURE1(image1); };
+  // Tell the browser to load an image
+  image1.src = './lib/dice.png';
+
+  var image2 = new Image();  // Create the image object
+  if (!image2) {
+    console.log('Failed to create the image object');
+    return false;
+  }
+  // Register the event handler to be called on loading an image
+  image2.onload = function(){ sendTextureToTEXTURE2(image2); };
+  // Tell the browser to load an image
+  image2.src = './lib/texture.png';
 
   // add more textures
   return true;
 }
 
 function sendTextureToTEXTURE0(image) {
-  texture = gl.createTexture();   // Create a texture object
-  if (!texture) {
+  texture0 = gl.createTexture();   // Create a texture object
+  if (!texture0) {
     console.log('Failed to create the texture object');
     return false;
   }
@@ -130,7 +149,7 @@ function sendTextureToTEXTURE0(image) {
   // Enable texture unit0
   gl.activeTexture(gl.TEXTURE0);
   // Bind the texture object to the target
-  gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.bindTexture(gl.TEXTURE_2D, texture0);
 
   // Set the texture parameters
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
@@ -139,6 +158,61 @@ function sendTextureToTEXTURE0(image) {
   
   // Set the texture unit 0 to the sampler
   gl.uniform1i(u_Sampler0, 0);
+  
+  // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
+// 
+  // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
+}
+
+function sendTextureToTEXTURE1(image) {
+  texture1 = gl.createTexture();   // Create a texture object
+  if (!texture1) {
+    console.log('Failed to create the texture object');
+    return false;
+  }
+
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
+  // gl.pixelStorei(gl.UNPACK_FLIP_X_WEBGL, 0);;
+  // Enable texture unit0
+  gl.activeTexture(gl.TEXTURE1);
+  // Bind the texture object to the target
+  gl.bindTexture(gl.TEXTURE_2D, texture1);
+
+  // Set the texture parameters
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  // Set the texture image
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
+  
+  // Set the texture unit 0 to the sampler
+  gl.uniform1i(u_Sampler1, 1);
+  
+  // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
+// 
+  // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
+}
+
+
+function sendTextureToTEXTURE2(image) {
+  texture2 = gl.createTexture();   // Create a texture object
+  if (!texture2) {
+    console.log('Failed to create the texture object');
+    return false;
+  }
+
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
+  // gl.pixelStorei(gl.UNPACK_FLIP_X_WEBGL, 0);;
+  // Enable texture unit0
+  gl.activeTexture(gl.TEXTURE2);
+  // Bind the texture object to the target
+  gl.bindTexture(gl.TEXTURE_2D, texture2);
+
+  // Set the texture parameters
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  // Set the texture image
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
+  
+  // Set the texture unit 0 to the sampler
+  gl.uniform1i(u_Sampler2, 2);
   
   // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
 // 

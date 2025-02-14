@@ -13,6 +13,12 @@ let u_FragColor;
 let u_ModelMatrix;
 let u_GlobalRotateMatrix;
 var u_Sampler0;
+var u_Sampler1;
+var u_Sampler2;
+
+var texture0 = null;
+var texture1 =null;
+var texture2=null;
 var u_whichTexture;
 var texture;
 var image; // TEXTIRE image

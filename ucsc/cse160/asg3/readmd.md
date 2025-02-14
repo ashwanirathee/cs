@@ -1,4 +1,4 @@
-- [] Cubes with different texture types
-- [] Sky cube
+- [x] Cubes with different texture types
+- [x] Sky cube
 - [] Sky Sphere addition with texture and rotate it to create different envs
 - 

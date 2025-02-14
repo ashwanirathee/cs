@@ -21,6 +21,8 @@ precision mediump float;
 uniform vec4 u_FragColor;
 varying vec2 v_UV;
 uniform sampler2D u_Sampler0;
+uniform sampler2D u_Sampler1;
+uniform sampler2D u_Sampler2;
 uniform int u_whichTexture;
 void main() {
   if(u_whichTexture == -2){
@@ -29,6 +31,10 @@ void main() {
     gl_FragColor = vec4(v_UV,1.0,1.0);
   } else if(u_whichTexture == 0){
     gl_FragColor = texture2D(u_Sampler0, v_UV);
+  } else if(u_whichTexture == 1){
+    gl_FragColor = texture2D(u_Sampler1, v_UV);
+  } else if(u_whichTexture == 2){
+    gl_FragColor = texture2D(u_Sampler2, v_UV);
   } else {
     gl_FragColor = vec4(1,.2,.2,1);
   }
