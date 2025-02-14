@@ -102,34 +102,31 @@ function isPowerOf2(value) {
   return (value & (value - 1)) === 0 && value > 0;
 }
 
-function initTextures(gl, n) {
-  var texture = gl.createTexture();   // Create a texture object
-  if (!texture) {
-    console.log('Failed to create the texture object');
-    return false;
-  }
-
-  // Get the storage location of u_Sampler
-  var u_Sampler0 = gl.getUniformLocation(gl.program, 'u_Sampler0');
-  if (!u_Sampler0) {
-    console.log('Failed to get the storage location of u_Sampler0');
-    return false;
-  }
+function initTextures() {
   var image = new Image();  // Create the image object
   if (!image) {
     console.log('Failed to create the image object');
     return false;
   }
   // Register the event handler to be called on loading an image
-  image.onload = function(){ loadTexture(gl, n, texture, u_Sampler0, image); };
+  image.onload = function(){ sendTextureToTEXTURE0(image); };
   // Tell the browser to load an image
-  image.src = './lib/texture.png';
+  image.src = './lib/dice.png';
 
+
+  // add more textures
   return true;
 }
 
-function loadTexture(gl, n, texture, u_Sampler, image) {
+function sendTextureToTEXTURE0(image) {
+  texture = gl.createTexture();   // Create a texture object
+  if (!texture) {
+    console.log('Failed to create the texture object');
+    return false;
+  }
+
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
+  // gl.pixelStorei(gl.UNPACK_FLIP_X_WEBGL, 0);;
   // Enable texture unit0
   gl.activeTexture(gl.TEXTURE0);
   // Bind the texture object to the target
@@ -141,22 +138,14 @@ function loadTexture(gl, n, texture, u_Sampler, image) {
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
   
   // Set the texture unit 0 to the sampler
-  gl.uniform1i(u_Sampler, 0);
+  gl.uniform1i(u_Sampler0, 0);
   
-  gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
-
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
+  // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
+// 
+  // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
 }
-function main() {
-  // setup webgl in general
-  setupWebGL();
 
-  // connects the variables and setup the GLSL shader
-  connectVariablesToGLSL();
-
-  // setup the scene graph and the renderer
-  init();
-  initTextures(gl,0);
+function addEventListeners(){
   // adds the event listeners for various events
   // addEventListeners();
   angleSlideX_component.addEventListener("mousemove", () => {
@@ -170,52 +159,55 @@ function main() {
     renderAllShapes();
   });
 
-  animationTimelessOn_Component.addEventListener("click", () => {
-    audio.play();
-    animationTimeless = true;
-
-    audio1.pause();
-    audio1.currentTime = 0; // Reset the audio
-    animationPoke = false;
-  });
-  animationTimelessOff_Component.addEventListener("click", () => {
-    audio.pause();
-    audio.currentTime = 0; // Reset the audio
-    animationTimeless = false;
-  });
-  animationPokeOn_Component.addEventListener("click", () => {
-    audio1.play();
-    animationPoke = true;
-
-    audio.pause();
-    audio.currentTime = 0; // Reset the audio
-    animationTimeless = false;
-  });
-  animationPokeOff_Component.addEventListener("click", () => {
-    audio1.pause();
-    audio1.currentTime = 0; // Reset the audio
-    angles["body"] = 0;
-    angles["leg_rear_left"] = 0;
-    angles["leg_rear_right"] = 0;
-    angles["leg_front_right"] = 0;
-    angles["leg_front_left"] = 0;
-    angles["tail"] = -170;
-    animationPoke = false;
-  });
-
-  canvas.addEventListener("click", (event) => {
-    if (event.shiftKey) {
-      // console.log("Shift + Click detected at:", event.clientX, event.clientY);
-      animationPoke = true;
-      audio1.play();
-      // drawMarker(event.clientX, event.clientY);
-    }
-  });
-
   canvas.onmousemove = click;
   canvas.addEventListener("mouseup", onMouseUp);
 
-  clearCanvas();
+  document.addEventListener('keydown', function(event) {
+    var oX;
+    var oY;
+    switch(event.key) {
+      case 'w':
+        console.log('W key pressed');
+        g_eye[2] -=0.1
+        break;
+      case 'a':
+        console.log('A key pressed');
+        g_eye[0] -=0.1
+        break;
+      case 's':
+        console.log('S key pressed');
+        g_eye[2] +=0.1
+        break;
+      case 'd':
+        console.log('D key pressed');
+        g_eye[0] +=0.1
+        break;
+      default:
+        // Handle other keys if needed
+        break;
+    }})
+}
+
+function main() {
+  // setup webgl in general
+  setupWebGL();
+
+  // connects the variables and setup the GLSL shader
+  connectVariablesToGLSL();
+
+  // setup the scene graph and the renderer
+  init();
+  initTextures();
+  addEventListeners();
+
+
+  g_eye =[0,0,3];
+  g_at = [0,0,-100];
+  g_up = [0,1,0];
+  asp_ratio = canvas.width/canvas.height;
+  field_angle = 60;
+  // clearCanvas();
+  gl.clearColor(0.0,0.0,0.0,1.0);
   requestAnimationFrame(tick);
 }
 

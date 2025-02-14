@@ -12,6 +12,16 @@ let segment_count_val = 10;
 let u_FragColor;
 let u_ModelMatrix;
 let u_GlobalRotateMatrix;
+var u_Sampler0;
+var u_whichTexture;
+var texture;
+var image; // TEXTIRE image
+  // draw every shape that's supposed to be on the canvas
+var g_eye;
+var g_at;
+var g_up;
+var asp_ratio;
+var field_angle;
 
 const shape_size = document.getElementById("shape_size");
 const size_change = document.getElementById("shape_size");

@@ -8,6 +8,7 @@ class Cube {
       this.uvs = null;
       this.uvBuffer = null;
       this.setUvs();
+      this.textureNum = -1;
     }
     
     generateVertices(){
@@ -74,10 +75,10 @@ class Cube {
       ]);
     }
   
-    drawCube(M, color) {
-      gl.uniformMatrix4fv(u_ModelMatrix, false, M.elements);
+    drawCube(M, color) {      
+      gl.uniform1i(u_whichTexture, this.textureNum);
       gl.uniform4f(u_FragColor, ...color);
-    
+      gl.uniformMatrix4fv(u_ModelMatrix, false, M.elements);
       if (this.vertices === null) {
         this.generateVertices();
       }
