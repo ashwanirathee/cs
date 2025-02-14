@@ -63,6 +63,13 @@ class WebGLRenderer {
     // floor.matrix.translate(-0.5,0,-0.5);
     floor.render();
     
+
+    var sky = new Cube();
+    sky.color = [0.0,0.0,1.0,1.0];
+    sky.textureNum = -2;
+    sky.matrix.scale(100, 100, 100);
+    sky.render();
+
     // draw a cube
     var body = new Cube();
     body.color = [1.0,0.0,0.0,1.0];
