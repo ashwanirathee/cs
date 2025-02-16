@@ -28,6 +28,8 @@ var g_at;
 var g_up;
 var asp_ratio;
 var field_angle;
+var ntex = 16.0;
+var camera;
 
 const shape_size = document.getElementById("shape_size");
 const size_change = document.getElementById("shape_size");

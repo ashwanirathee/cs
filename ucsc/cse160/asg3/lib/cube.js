@@ -1,5 +1,5 @@
 class Cube {
-    constructor() {
+    constructor(textureAtlasNum, textureNum) {
       this.type = "cube";
       this.color = [1.0,1.0,1.0,1.0];
       this.matrix = new Matrix4();
@@ -7,8 +7,9 @@ class Cube {
       this.vertices = null;
       this.uvs = null;
       this.uvBuffer = null;
+      this.textureAtlasNum = textureAtlasNum;
+      this.textureNum = textureNum;
       this.setUvs();
-      this.textureNum = -1;
     }
     
     generateVertices(){
@@ -43,8 +44,9 @@ class Cube {
         -0.5,0.5,-0.5, -0.5,0.5,0.5, 0.5,0.5,0.5,
         -0.5,0.5,-0.5, 0.5,0.5,0.5, 0.5,0.5,-0.5,
         //BACK
-        0.5,0.5,-0.5, 0.5,-0.5,-0.5, -0.5,0.5,-0.5,
-        -0.5,0.5,-0.5, 0.5,-0.5,-0.5, -0.5,-0.5,-0.5,
+        0.5,0.5,-0.5, 0.5,-0.5,-0.5, -0.5,-0.5,-0.5,
+        0.5,0.5,-0.5, -0.5,-0.5,-0.5, -0.5,0.5,-0.5,
+
         //BOTTOM
         -0.5,-0.5,0.5, -0.5,-0.5,-0.5, 0.5,-0.5,-0.5,
         -0.5,-0.5,0.5, 0.5,-0.5,-0.5, 0.5,-0.5,0.5
@@ -52,31 +54,94 @@ class Cube {
     }
 
     setUvs() {
+      // console.log("ntex:", ntex);
+
+      // console.log(this.textureNum)
       // prettier-ignore
-      this.uvs = new Float32Array([
-        // FRONT
-        0,1, 0,0, 1,0, 
-        0,1, 1,0, 1,1,
-        // LEFT
-        0,1, 0,0, 1,0,
-        0,1, 1,0, 1,1,
-        // RIGHT
-        0,1, 0,0, 1,0, 
-        0,1, 1,0, 1,1,
-        // TOP
-        1,0, 1,1, 0,1, 
-        1,0, 0,1, 0,0,
-        // BACK
-        0,1, 0,0, 1,1, 
-        1,1, 0,0, 1,0,
-        // BOTTOM
-        0,1, 0,0, 1,0, 
-        0,1, 1,0, 1,1,
-      ]);
+      if(this.textureNum === 2){
+        var x = 0;
+        var y = 1;
+        var eps = 0.03;
+        // var offx = 1
+        this.uvs = new Float32Array([
+          // FRONT
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, 
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
+          // LEFT
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, 
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
+        
+          // RIGHT
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, 
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
+        
+          // TOP
+          (x+ eps)/ntex,(y+2-eps)/ntex, (x+eps)/ntex,(y+1+eps)/ntex, (x+1-eps)/ntex,(y+1-eps)/ntex,
+          (x+ eps)/ntex,(y+2-eps)/ntex, (x+1-eps)/ntex,(y+1+eps)/ntex, (x+1-eps)/ntex,(y+2-eps)/ntex ,
+          // BACK
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, 
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
+        
+          // BOTTOM
+          (x+ eps)/ntex,(y-eps)/ntex, (x+eps)/ntex,(y-1+eps)/ntex, (x+1-eps)/ntex,(y-1+eps)/ntex,
+          (x+ eps)/ntex,(y-eps)/ntex, (x+1-eps)/ntex,(y-1+eps)/ntex, (x+1-eps)/ntex,(y-eps)/ntex, 
+        ]);
+      } else if (this.textureNum === 3){
+        var x = 10;
+        var y = 0;
+        var eps = 0.04;
+        // var offx = 1
+        this.uvs = new Float32Array([
+          // FRONT
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, 
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
+          // LEFT
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, 
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
+        
+          // RIGHT
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, 
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
+        
+          // TOP
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, 
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
+          // BACK
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, 
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
+        
+          // BOTTOM
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, 
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
+        ]);
+       
+      } else {
+        this.uvs = new Float32Array([
+          // FRONT
+          0,1, 0,0, 1,0, 
+          0,1, 1,0, 1,1,
+          // LEFT
+          0,1, 0,0, 1,0,
+          0,1, 1,0, 1,1,
+          // RIGHT
+          0,1, 0,0, 1,0, 
+          0,1, 1,0, 1,1,
+          // TOP
+          1,0, 1,1, 0,1, 
+          1,0, 0,1, 0,0,
+          // BACK
+          0,1, 0,0, 1,1, 
+          1,1, 0,0, 1,0,
+          // BOTTOM
+          0,1, 0,0, 1,0, 
+          0,1, 1,0, 1,1,
+        ]);
+      }
+
     }
   
     drawCube(M, color) {      
-      gl.uniform1i(u_whichTexture, this.textureNum);
+      gl.uniform1i(u_whichTexture, this.textureAtlasNum);
       gl.uniform4f(u_FragColor, ...color);
       gl.uniformMatrix4fv(u_ModelMatrix, false, M.elements);
       if (this.vertices === null) {

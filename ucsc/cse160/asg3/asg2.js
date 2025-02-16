@@ -152,7 +152,16 @@ function sendTextureToTEXTURE0(image) {
   gl.bindTexture(gl.TEXTURE_2D, texture0);
 
   // Set the texture parameters
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+
+  // gl.generateMipmap(gl.TEXTURE_2D);
+
+  
+
   // Set the texture image
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
   
@@ -239,28 +248,40 @@ function addEventListeners(){
   document.addEventListener('keydown', function(event) {
     var oX;
     var oY;
+    var step = 0.1
     switch(event.key) {
       case 'w':
-        console.log('W key pressed');
-        g_eye[2] -=0.1
+        // console.log('W key pressed');
+        // camera.cameraZ-=0.5
+        console.log("W moved:")
+        // console.log("Camera Z before:", camera.cameraZ)
+        // camera.moveForward(step);
+        // console.log("Camera Z after:", camera.cameraZ)
         break;
       case 'a':
-        console.log('A key pressed');
-        g_eye[0] -=0.1
+        // console.log('A key pressed');
+        // camera.cameraX -=0.5
+        console.log("A moved:")
+        // camera.moveLeft(step)
         break;
       case 's':
-        console.log('S key pressed');
-        g_eye[2] +=0.1
+        // console.log('S key pressed');
+        // camera.cameraZ +=0.5
+        console.log("s moved:")
+        // camera.moveBackward(step)
         break;
       case 'd':
-        console.log('D key pressed');
-        g_eye[0] +=0.1
+        // console.log('D key pressed');
+        // camera.cameraX +=0.5
+        console.log("d moved:")
+        // camera.moveRight(step) 
         break;
       default:
         // Handle other keys if needed
         break;
     }})
 }
+
 
 function main() {
   // setup webgl in general
@@ -275,11 +296,18 @@ function main() {
   addEventListeners();
 
 
-  g_eye =[0,0,3];
-  g_at = [0,0,-100];
+  g_eye =[0,0,30];
+  g_at = [0,0,0];
   g_up = [0,1,0];
   asp_ratio = canvas.width/canvas.height;
-  field_angle = 60;
+  console.log(asp_ratio);
+  field_angle = 45; // fov
+  near = .1;
+  far = 100;
+  camera = new Camera(g_eye, g_at, g_up, field_angle, asp_ratio, near, far);
+
+
+  // camera.setFirstPerson(0,0,3,0,0,-100);
   // clearCanvas();
   gl.clearColor(0.0,0.0,0.0,1.0);
   requestAnimationFrame(tick);
@@ -287,7 +315,7 @@ function main() {
 
 function tick() {
   g_seconds = performance.now() / 1000 - g_startTime;
-  updateAnimationAngles();
+  // updateAnimationAngles();
   renderAllShapes(); // this is same as renderScene();
   requestAnimationFrame(tick);
 }
