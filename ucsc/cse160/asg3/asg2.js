@@ -248,33 +248,41 @@ function addEventListeners(){
   document.addEventListener('keydown', function(event) {
     var oX;
     var oY;
-    var step = 0.1
+    var step = 0.5
     switch(event.key) {
       case 'w':
         // console.log('W key pressed');
         // camera.cameraZ-=0.5
         console.log("W moved:")
         // console.log("Camera Z before:", camera.cameraZ)
-        // camera.moveForward(step);
+        camera.moveForward(step);
         // console.log("Camera Z after:", camera.cameraZ)
         break;
       case 'a':
         // console.log('A key pressed');
         // camera.cameraX -=0.5
         console.log("A moved:")
-        // camera.moveLeft(step)
+        camera.moveLeft(step)
         break;
       case 's':
         // console.log('S key pressed');
         // camera.cameraZ +=0.5
         console.log("s moved:")
-        // camera.moveBackward(step)
+        camera.moveBackward(step)
         break;
       case 'd':
         // console.log('D key pressed');
         // camera.cameraX +=0.5
         console.log("d moved:")
-        // camera.moveRight(step) 
+        camera.moveRight(step) 
+        break;
+      case 'q':
+        console.log('q moved, pan toward left')
+        // var anglechange = -Math.PI/50;
+        // camera.panYaw(anglechange);
+        break;
+      case 'e':
+        console.log("e moved, pan towards right")
         break;
       default:
         // Handle other keys if needed
@@ -295,20 +303,17 @@ function main() {
   initTextures();
   addEventListeners();
 
-
+  // debugger;
   g_eye =[0,0,30];
-  g_at = [0,0,0];
+  g_at = [0,0,-1];
   g_up = [0,1,0];
   asp_ratio = canvas.width/canvas.height;
-  console.log(asp_ratio);
+  // console.log(asp_ratio);
   field_angle = 45; // fov
   near = .1;
   far = 100;
   camera = new Camera(g_eye, g_at, g_up, field_angle, asp_ratio, near, far);
 
-
-  // camera.setFirstPerson(0,0,3,0,0,-100);
-  // clearCanvas();
   gl.clearColor(0.0,0.0,0.0,1.0);
   requestAnimationFrame(tick);
 }

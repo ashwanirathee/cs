@@ -1,14 +1,5 @@
 class Camera {
     constructor(g_eye, g_at, g_up, field_angle, asp_ratio, near_plane, far_plane) {
-        // this.cameraX = 0;
-        // this.cameraY = 0;
-        // this.cameraZ = 3;
-        // // this.g_eye = [0,0,3];
-        // this.g_eye = g_eye;
-        // // this.g_at = [0,0,-100];
-        // this.g_at = g_at;
-        // // this.g_up = [0,1,0];
-        // this.g_up = g_up;
         console.log("Camera");
         this.cameraX = g_eye[0];
         this.cameraY = g_eye[1];
@@ -23,7 +14,7 @@ class Camera {
         this.upZ = 0;
 
         this.pitch = 0;
-        this.yaw = 0;
+        this.yaw = -Math.PI/2;
         this.roll = 0;
 
         this.fov = field_angle;
@@ -70,23 +61,122 @@ class Camera {
     moveForward (step) {
         // this.move(step, 0);
         // co
-        // this.cameraX += this.directionX;
-        // this.cameraY += this.directionY;
-        // this.cameraZ += this.directionZ;
-        // console.log("AFTER:", cameraX, cameraY, cameraZ);
+        this.cameraX += step * this.directionX;
+        this.cameraY += step * this.directionY;
+        this.cameraZ += step * this.directionZ;
+
+        this.viewMat.setLookAt(
+            this.cameraX, this.cameraY, this.cameraZ,
+            this.directionX + this.cameraX, this.directionY + this.cameraY, this.directionZ + this.cameraZ,
+            this.upX, this.upY, this.upZ);
+        
+        gl.uniformMatrix4fv(u_ViewMatrix, false, this.viewMat.elements);
     }
 
     moveBackward (step) {
-        // this.move(step, 1);
+        this.cameraX -= step * this.directionX;
+        this.cameraY -= step * this.directionY;
+        this.cameraZ -= step * this.directionZ;
+
+        this.viewMat.setLookAt(
+            this.cameraX, this.cameraY, this.cameraZ,
+            this.directionX + this.cameraX, this.directionY + this.cameraY, this.directionZ + this.cameraZ,
+            this.upX, this.upY, this.upZ);
+        
+        gl.uniformMatrix4fv(u_ViewMatrix, false, this.viewMat.elements);
 
     }
 
     moveLeft (step) {
-        this.move(step, 2);
+        // We do the cross product to get the right vector (according to the camera)
+        let crossX = this.directionY * this.upZ - this.directionZ * this.upY;
+        let crossY = this.directionX * this.upZ - this.directionZ * this.upX;
+        let crossZ = this.directionX * this.upY - this.directionY * this.upX;
+
+        // Then we normalize it otherwise it may return different vectors based on the direction vector
+        let length = Math.sqrt(crossX**2 + crossY**2 + crossZ**2);
+
+        let normX = crossX / length;
+        let normY = crossY / length;
+        let normZ = crossZ / length;
+
+        this.cameraX -= normX * step;
+        this.cameraY -= normY * step;
+        this.cameraZ -= normZ * step;
+
+        this.viewMat.setLookAt(
+            this.cameraX, this.cameraY, this.cameraZ,
+            this.directionX + this.cameraX, this.directionY + this.cameraY, this.directionZ + this.cameraZ,
+            this.upX, this.upY, this.upZ);
+        
+        gl.uniformMatrix4fv(u_ViewMatrix, false, this.viewMat.elements);
     }
 
     moveRight (step) {
-        this.move(step, 3);
+        // We do the cross product to get the right vector (according to the camera)
+        let crossX = this.directionY * this.upZ - this.directionZ * this.upY;
+        let crossY = this.directionX * this.upZ - this.directionZ * this.upX;
+        let crossZ = this.directionX * this.upY - this.directionY * this.upX;
+
+        // Then we normalize it otherwise it may return different vectors based on the direction vector
+        let length = Math.sqrt(crossX**2 + crossY**2 + crossZ**2);
+
+        let normX = crossX / length;
+        let normY = crossY / length;
+        let normZ = crossZ / length;
+
+        this.cameraX += normX * step;
+        this.cameraY += normY * step;
+        this.cameraZ += normZ * step;
+
+        this.viewMat.setLookAt(
+            this.cameraX, this.cameraY, this.cameraZ,
+            this.directionX + this.cameraX, this.directionY + this.cameraY, this.directionZ + this.cameraZ,
+            this.upX, this.upY, this.upZ);
+        
+        gl.uniformMatrix4fv(u_ViewMatrix, false, this.viewMat.elements);
+    }
+
+    panYaw(anglechange){
+        let toRad = Math.PI/180;
+        // this.yaw += anglechange * toRad;
+        // console.log(this.yaw, this.pitch)
+        this.constrainPitch = true
+        if (this.constrainPitch) {
+            if (this.pitch > (Math.PI/2.0) - Math.PI/180.0)
+                this.pitch = (Math.PI / 2.0) - Math.PI / 180.0;
+            if (this.pitch < -((Math.PI / 2.0) - Math.PI / 180.0))
+                this.pitch = -((Math.PI / 2.0) - Math.PI / 180.0);
+        }
+        // console.log(Math.cos(this.yaw) * Math.cos(this.pitch));
+        // console.log(Math.sin(this.pitch));
+        // console.log(Math.sin(this.yaw) * Math.cos(this.pitch))
+        var front = new Vector3([Math.cos(this.yaw) * Math.cos(this.pitch), Math.sin(this.pitch),  Math.sin(this.yaw) * Math.cos(this.pitch)])
+        console.log(front)
+        front.normalize();
+        console.log(front)
+        
+        this.directionX = front[0];
+        this.directionY = front[1];
+        this.directionZ = front[2];
+
+        var worldUp = new Vector3([0,0,1]);
+        var right = Vector3.cross(front, worldUp);
+        right.normalize();
+
+
+        var camUp = Vector3.cross(right, front);
+        camUp.normalize();
+        this.upX = camUp[0];
+        this.upY = camUp[1];
+        this.upZ = camUp[2]
+
+        this.viewMat.setLookAt(
+            this.cameraX, this.cameraY, this.cameraZ,
+            this.directionX + this.cameraX, this.directionY + this.cameraY, this.directionZ + this.cameraZ,
+            this.upX, this.upY, this.upZ);
+        
+        gl.uniformMatrix4fv(u_ViewMatrix, false, this.viewMat.elements);
     }
 
     moveTo (x, y, z) {
