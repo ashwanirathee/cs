@@ -225,6 +225,7 @@ function handleMouseDown(event){
     // we add!
 
   }
+  renderer.buildCubeInstances();
 }
 
 function pickBlock(camera, world, distance = 1) {
