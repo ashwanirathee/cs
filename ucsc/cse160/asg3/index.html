@@ -10,6 +10,8 @@
   canvas {
     background-color: black;
     border: 1px solid #ccc;
+    width: 100%;
+    height: 100%;
   }
 
   .container {
@@ -32,6 +34,9 @@
 </style>
 
 <body onload="main()">
+  <div class="column"> <canvas id="webgl_canvas">
+    Please use a browser that supports "canvas"
+  </canvas></div>
   <div class="container">
     <div class="column">
       <p>
@@ -41,11 +46,11 @@
       <p id="perf">perfstats:</p>
       <p>
         Camera Angle X
-        <input type="range" min="0" max="360" value="5" id="angleSlideX">
+        <input type="range" min="0" max="360" value="0" id="angleSlideX">
       </p>
       <p>
         Camera Angle Y
-        <input type="range" min="0" max="360" value="5" id="angleSlideY">
+        <input type="range" min="0" max="360" value="0" id="angleSlideY">
       </p>
       <p>
         Timeless Sequence Animation 1:
@@ -119,9 +124,6 @@
       <span id="leg_rear_right_angle_value">0</span>
       <br>
     </div>
-    <div class="column"> <canvas id="webgl_canvas" width="400" height="400">
-        Please use a browser that supports "canvas"
-      </canvas></div>
   </div>
 
 

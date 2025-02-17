@@ -1,288 +1,200 @@
 class Camera {
     constructor(g_eye, g_at, g_up, field_angle, asp_ratio, near_plane, far_plane) {
-        console.log("Camera");
-        this.cameraX = g_eye[0];
-        this.cameraY = g_eye[1];
-        this.cameraZ = g_eye[2];
 
-        this.directionX = g_at[0];
-        this.directionY = g_at[1];
-        this.directionZ = g_at[2];
+        this.eye = new Vector3([0, 0, 0]);
+        this.fov = 60.0;
+        this.at = new Vector3([0, 0, -1]);
+        this.up = new Vector3([0, 1, 0]);
 
-        this.upX = 0;
-        this.upY = 1;
-        this.upZ = 0;
+        this.right = Vector3.cross(this.at, this.up);
+        this.right.normalize();
 
-        this.pitch = 0;
-        this.yaw = -Math.PI/2;
-        this.roll = 0;
+        this.speed = 0.5;
+        this.alpha = 1.0;
 
-        this.fov = field_angle;
-        this.aspect = asp_ratio;
+        this.viewMatrix = new Matrix4();
+        this.updateViewMatrix();
+
         this.near = near_plane;
         this.far = far_plane;
-        this.mode = null;
+        this.aspect = asp_ratio;
 
-        this.projMat = new Matrix4();
-        this.viewMat = new Matrix4();
-
-        this.projMat.setPerspective(this.fov, this.aspect, this.near, this.far);
-        gl.uniformMatrix4fv(u_ProjectionMatrix, false, this.projMat.elements);
-
-        this.viewMat.setLookAt(this.cameraX, this.cameraY,this.cameraZ,this.directionX, this.directionY, this.directionZ,this.upX, this.upY, this.upZ);
-        gl.uniformMatrix4fv(u_ViewMatrix, false, this.viewMat.elements);
-
-        console.log("Camera Initialized")
+        this.projectionMatrix = new Matrix4();
+        this.updateProjectionMatrix();
     }
 
-    update(){
-        this.projMat = new Matrix4();
-        this.viewMat = new Matrix4();
-        this.projMat.setPerspective(this.fov, this.aspect, this.near, this.far);
-        this.viewMat.setLookAt(this.cameraX, this.cameraY,this.cameraZ,this.directionX, this.directionY, this.directionZ,this.upX, this.upY, this.upZ);
+    update() {
+        this.projectionMatrix.setPerspective(this.fov, this.aspect, this.near, this.far);
+        this.viewMatrix.setLookAt(this.cameraX, this.cameraY,this.cameraZ,this.directionX, this.directionY, this.directionZ,this.upX, this.upY, this.upZ);
         gl.uniformMatrix4fv(u_ProjectionMatrix, false, this.projMat.elements);
         gl.uniformMatrix4fv(u_ViewMatrix, false, this.viewMat.elements);
     }
-
-
 
     changeFov (fov) {
         this.fov = fov;
         this.updateProjectiveMatrix();
     }
 
-    updateProjectionMatrix () {
-        this.projMat.setPerspective(this.fov, this.aspect, this.near, this.far);
-        gl.uniformMatrix4fv(u_ProjectionMatrix, false, this.projMat.elements);
-        // gl.uniformMatrix4fv(u_ProjectionMatrix, false, this.projMat.elements);
-        // gl.uniformMatrix4fv(u_ViewMatrix, false, this.viewMat.elements);
-    }
-
-    moveForward (step) {
-        // this.move(step, 0);
-        // co
-        this.cameraX += step * this.directionX;
-        this.cameraY += step * this.directionY;
-        this.cameraZ += step * this.directionZ;
-
-        this.viewMat.setLookAt(
-            this.cameraX, this.cameraY, this.cameraZ,
-            this.directionX + this.cameraX, this.directionY + this.cameraY, this.directionZ + this.cameraZ,
-            this.upX, this.upY, this.upZ);
-        
-        gl.uniformMatrix4fv(u_ViewMatrix, false, this.viewMat.elements);
-    }
-
-    moveBackward (step) {
-        this.cameraX -= step * this.directionX;
-        this.cameraY -= step * this.directionY;
-        this.cameraZ -= step * this.directionZ;
-
-        this.viewMat.setLookAt(
-            this.cameraX, this.cameraY, this.cameraZ,
-            this.directionX + this.cameraX, this.directionY + this.cameraY, this.directionZ + this.cameraZ,
-            this.upX, this.upY, this.upZ);
-        
-        gl.uniformMatrix4fv(u_ViewMatrix, false, this.viewMat.elements);
-
-    }
-
-    moveLeft (step) {
-        // We do the cross product to get the right vector (according to the camera)
-        let crossX = this.directionY * this.upZ - this.directionZ * this.upY;
-        let crossY = this.directionX * this.upZ - this.directionZ * this.upX;
-        let crossZ = this.directionX * this.upY - this.directionY * this.upX;
-
-        // Then we normalize it otherwise it may return different vectors based on the direction vector
-        let length = Math.sqrt(crossX**2 + crossY**2 + crossZ**2);
-
-        let normX = crossX / length;
-        let normY = crossY / length;
-        let normZ = crossZ / length;
-
-        this.cameraX -= normX * step;
-        this.cameraY -= normY * step;
-        this.cameraZ -= normZ * step;
-
-        this.viewMat.setLookAt(
-            this.cameraX, this.cameraY, this.cameraZ,
-            this.directionX + this.cameraX, this.directionY + this.cameraY, this.directionZ + this.cameraZ,
-            this.upX, this.upY, this.upZ);
-        
-        gl.uniformMatrix4fv(u_ViewMatrix, false, this.viewMat.elements);
-    }
-
-    moveRight (step) {
-        // We do the cross product to get the right vector (according to the camera)
-        let crossX = this.directionY * this.upZ - this.directionZ * this.upY;
-        let crossY = this.directionX * this.upZ - this.directionZ * this.upX;
-        let crossZ = this.directionX * this.upY - this.directionY * this.upX;
-
-        // Then we normalize it otherwise it may return different vectors based on the direction vector
-        let length = Math.sqrt(crossX**2 + crossY**2 + crossZ**2);
-
-        let normX = crossX / length;
-        let normY = crossY / length;
-        let normZ = crossZ / length;
-
-        this.cameraX += normX * step;
-        this.cameraY += normY * step;
-        this.cameraZ += normZ * step;
-
-        this.viewMat.setLookAt(
-            this.cameraX, this.cameraY, this.cameraZ,
-            this.directionX + this.cameraX, this.directionY + this.cameraY, this.directionZ + this.cameraZ,
-            this.upX, this.upY, this.upZ);
-        
-        gl.uniformMatrix4fv(u_ViewMatrix, false, this.viewMat.elements);
-    }
-
-    panYaw(anglechange){
-        let toRad = Math.PI/180;
-        // this.yaw += anglechange * toRad;
-        // console.log(this.yaw, this.pitch)
-        this.constrainPitch = true
-        if (this.constrainPitch) {
-            if (this.pitch > (Math.PI/2.0) - Math.PI/180.0)
-                this.pitch = (Math.PI / 2.0) - Math.PI / 180.0;
-            if (this.pitch < -((Math.PI / 2.0) - Math.PI / 180.0))
-                this.pitch = -((Math.PI / 2.0) - Math.PI / 180.0);
+    isColliding(newPos) {
+        // Convert the world coordinates to grid indices.
+        // Assuming that when rendering, you do:
+        //   translate(x - world.rows/2, h - 1, y - world.cols/2);
+        // so we reverse that transformation here.
+        let gridX = Math.floor(newPos.elements[0] + renderer.rows / 2);
+        let gridY = Math.floor(newPos.elements[2] + renderer.cols / 2);
+      
+        // Check if we're out of bounds. You might decide whether that is allowed or not.
+        if (gridX < 0  || gridX >= renderer.rows || gridY < 0 || gridY >= renderer.cols) {
+          return true; // Prevent movement out of bounds.
         }
-        // console.log(Math.cos(this.yaw) * Math.cos(this.pitch));
-        // console.log(Math.sin(this.pitch));
-        // console.log(Math.sin(this.yaw) * Math.cos(this.pitch))
-        var front = new Vector3([Math.cos(this.yaw) * Math.cos(this.pitch), Math.sin(this.pitch),  Math.sin(this.yaw) * Math.cos(this.pitch)])
-        console.log(front)
-        front.normalize();
-        console.log(front)
-        
-        this.directionX = front[0];
-        this.directionY = front[1];
-        this.directionZ = front[2];
-
-        var worldUp = new Vector3([0,0,1]);
-        var right = Vector3.cross(front, worldUp);
-        right.normalize();
-
-
-        var camUp = Vector3.cross(right, front);
-        camUp.normalize();
-        this.upX = camUp[0];
-        this.upY = camUp[1];
-        this.upZ = camUp[2]
-
-        this.viewMat.setLookAt(
-            this.cameraX, this.cameraY, this.cameraZ,
-            this.directionX + this.cameraX, this.directionY + this.cameraY, this.directionZ + this.cameraZ,
-            this.upX, this.upY, this.upZ);
-        
-        gl.uniformMatrix4fv(u_ViewMatrix, false, this.viewMat.elements);
+      
+        // Return true if the cell is occupied (nonzero)
+        return renderer.g_map[gridX][gridY] !== 0;
     }
 
-    moveTo (x, y, z) {
-        this.cameraX = x;
-        this.cameraY = y;
-        this.cameraZ = z;
-        this.updateViewMatrix();
-    }
+    moveForward () {
+        var f = new Vector3([this.at.elements[0], this.at.elements[1], this.at.elements[2]]);
+        f.sub(this.eye);
+        f.normalize();
 
-    headTo (rx, ry, rz) {
-        this.pitch = rx;
-        this.yaw = ry;
-        this.roll = rz;
-        this.updateViewMatrix();
-    }
+        f.mul(this.speed);
 
-    move (step, direction) {
-        // step, 0.001
-        // direction, 0
-        if (direction === 1 || direction === 2) step *= -1;
+        let newEye = this.eye.clone().add(f);
 
-        if (direction === 0 || direction === 1) {
-            console.log("After:", this.cameraX, this.cameraY, this.cameraZ)
-            this.cameraX += step * this.directionX;
-            this.cameraY += step * this.directionY;
-            this.cameraZ += step * this.directionZ;
-            console.log("Before:", this.cameraX, this.cameraY, this.cameraZ)
+        // Check if the new position would be inside a block.
+        if (!this.isColliding(newEye)) {
+            // If not, update the camera position.
+            this.eye = newEye;
+            this.at = this.at.clone().add(f);
+            this.updateViewMatrix();
         } else {
-            // We do the cross product to get the right vector (according to the camera)
-            let crossX = this.directionY * this.upZ - this.directionZ * this.upY;
-            let crossY = this.directionX * this.upZ - this.directionZ * this.upX;
-            let crossZ = this.directionX * this.upY - this.directionY * this.upX;
-
-            // Then we normalize it otherwise it may return different vectors based on the direction vector
-            let length = Math.sqrt(crossX**2 + crossY**2 + crossZ**2);
-
-            let normX = crossX / length;
-            let normY = crossY / length;
-            let normZ = crossZ / length;
-
-            this.cameraX += normX * step;
-            this.cameraY += normY * step;
-            this.cameraZ += normZ * step;
+            console.log("Collision detected! Movement blocked.");
         }
+        // // this.eye.add(f);
+        // this.at.add(f);
+
+        // this.updateViewMatrix();
+    }
+
+    moveBackward() {
+        var b = new Vector3([this.eye.elements[0], this.eye.elements[1], this.eye.elements[2]]);
+        b.sub(this.at);
+        b.normalize();
+
+        b.mul(this.speed);
+
+        // this.eye.add(b);
+        // this.at.add(b);
+
+        // this.updateViewMatrix();
+        let newEye = this.eye.clone().add(b);
+
+        // Check if the new position would be inside a block.
+        if (!this.isColliding(newEye)) {
+            // If not, update the camera position.
+            this.eye = newEye;
+            this.at = this.at.clone().add(b);
+            this.updateViewMatrix();
+        } else {
+            console.log("Collision detected! Movement blocked.");
+        }
+    }
+
+    moveLeft() {
+        var f = new Vector3([this.at.elements[0], this.at.elements[1], this.at.elements[2]]);
+        f.sub(this.eye);
+        f.normalize();
+
+        var s = Vector3.cross(this.up, f);
+        s.normalize();
+        s.mul(this.speed);
+
+        // this.eye.add(s);
+        // this.at.add(s);
+
+        // this.updateViewMatrix();
+        let newEye = this.eye.clone().add(s);
+
+        // Check if the new position would be inside a block.
+        if (!this.isColliding(newEye)) {
+            // If not, update the camera position.
+            this.eye = newEye;
+            this.at = this.at.clone().add(s);
+            this.updateViewMatrix();
+        } else {
+            console.log("Collision detected! Movement blocked.");
+        }
+    }
+
+    moveRight() {
+        var f = new Vector3([this.at.elements[0], this.at.elements[1], this.at.elements[2]]);
+        f.sub(this.eye);
+        f.normalize();
+
+        var s = Vector3.cross(f, this.up);
+        s.normalize();
+        s.mul(this.speed);
+
+        // this.eye.add(s);
+        // this.at.add(s);
+
+        // this.updateViewMatrix();
+        let newEye = this.eye.clone().add(s);
+
+        // Check if the new position would be inside a block.
+        if (!this.isColliding(newEye)) {
+            // If not, update the camera position.
+            this.eye = newEye;
+            this.at = this.at.clone().add(s);
+            this.updateViewMatrix();
+        } else {
+            console.log("Collision detected! Movement blocked.");
+        }
+    }
+
+    panLeft() {
+        var f = new Vector3([this.at.elements[0], this.at.elements[1], this.at.elements[2]]);
+        f.sub(this.eye);
+        f.normalize();
+
+        var rotationMatrix = new Matrix4();
+        rotationMatrix.setRotate(this.alpha, this.up.elements[0], this.up.elements[1], this.up.elements[2]);
+        var f_prime = rotationMatrix.multiplyVector3(f);
+
+        this.at.elements[0] = this.eye.elements[0];
+        this.at.elements[1] = this.eye.elements[1];
+        this.at.elements[2] = this.eye.elements[2];
+        this.at.add(f_prime);
+
         this.updateViewMatrix();
     }
 
-    rotateX(alpha) {
-        this.pitch += alpha;
-        if (this.pitch > 89) this.pitch = 89;
-        if (this.pitch < -89) this.pitch = -89;
-        this.updateViewMatrix();
-    }
+    panRight() {
+        var f = new Vector3([this.at.elements[0], this.at.elements[1], this.at.elements[2]]);
+        f.sub(this.eye);
+        f.normalize();
 
-    rotateY(alpha) {
-        this.yaw += alpha;
-        this.updateViewMatrix();
-    }
+        var rotationMatrix = new Matrix4();
+        rotationMatrix.setRotate(-this.alpha, this.up.elements[0], this.up.elements[1], this.up.elements[2]);
+        var f_prime = rotationMatrix.multiplyVector3(f);
 
-    rotateZ (alpha) {
-        this.roll += alpha;
-        this.updateViewMatrix();
-    }
-
-    setFirstPerson (x, y, z, lx, ly, lz) {
-        // Move the camera to the player's eyes
-        this.cameraX = x;
-        this.cameraY = y;
-        this.cameraZ = z;
-
-        // Set the rotation to 0
-        this.pitch = 0;
-        this.yaw = 0;
-        this.roll = 0;
-
-        // Change what the camera is looking at
-        this.directionX = lx;
-        this.directionY = ly;
-        this.directionZ = lz;
-
-        // Change the mode
-        this.mode = Camera.FIRST_PERSON;
+        this.at.elements[0] = this.eye.elements[0];
+        this.at.elements[1] = this.eye.elements[1];
+        this.at.elements[2] = this.eye.elements[2];
+        this.at.add(f_prime);
 
         this.updateViewMatrix();
     }
 
     updateViewMatrix() {
-        this.viewMatrix = new Matrix4();
-        let toRad = Math.PI/180;
-        // Calculate direction according to pitch and yaw
-        // this.directionX = Math.cos(this.yaw * toRad) * Math.cos(this.pitch * toRad);
-        // this.directionY = Math.sin(this.pitch * toRad);
-        // this.directionZ = Math.sin(this.yaw * toRad) * Math.cos(this.pitch * toRad);
+        this.viewMatrix.setLookAt(this.eye.elements[0], this.eye.elements[1], this.eye.elements[2],
+            this.at.elements[0], this.at.elements[1], this.at.elements[2],
+            this.up.elements[0], this.up.elements[1], this.up.elements[2]);
+        gl.uniformMatrix4fv(u_ViewMatrix, false, this.viewMatrix.elements);
+    }
 
-        // // Calculate up vector according to roll
-        // if (this.roll !== this.lastRoll) {
-        //     this.upX = this.upX * Math.cos(this.roll * toRad) - this.upY * Math.sin(this.roll * toRad);
-        //     this.upY = this.upX * Math.sin(this.roll * toRad) + this.upY * Math.cos(this.roll * toRad);
-        //     this.lastRoll = this.roll;
-        // }
-
-        this.viewMat.lookAt(
-            this.cameraX, this.cameraY, this.cameraZ,
-            this.directionX + this.cameraX, this.directionY + this.cameraY, this.directionZ + this.cameraZ,
-            this.upX, this.upY, this.upZ);
-        
-        gl.uniformMatrix4fv(u_ViewMatrix, false, this.viewMat.elements);
+    updateProjectionMatrix() {
+        this.projectionMatrix.setPerspective(this.fov, this.aspect, this.near, this.far);
+        gl.uniformMatrix4fv(u_ProjectionMatrix, false, this.projectionMatrix.elements);
     }
 }

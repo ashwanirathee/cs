@@ -17,6 +17,10 @@ class Vector3 {
         this.elements = v;
     }
 
+    clone(){
+      var v = new Vector3(this.elements);
+      return v;
+    }
     /**
      * Copy vector.
      * @param src source vector

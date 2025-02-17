@@ -2,27 +2,33 @@ class WebGLRenderer {
   constructor() {
     this.dayColor = [0.53, 0.81, 0.92]; // Day Sky color (Sky Blue)
     this.nightColor = [0.2, 0.2, 0.2]; // Night Sky color (Dark Blue)
-    this.rows = 2;
-    this.cols = 2;
+    this.rows = 32;
+    this.cols = 32;
     this.g_map = null;
   }
 
   drawMap(){
     if(this.g_map == null){
       this.g_map = this.generateMaze(this.rows, this.cols);
-      // console.log(this.g_map)
+      console.log(this.g_map)
     }
     var x;
     var y;
+    // console.log('New Case')
     // console.log(this.g_map)
     for(x=0;x<=this.rows;x++){
       for(y=0;y<=this.cols;y++){
         if(this.g_map[x][y] > 0){
-
+          
           for(var h = 1; h<=this.g_map[x][y];h++){
             // console.log(this.g_map[x][y])
-            var body = new Cube(2,3);
+            var type = (x === 0 || y === 0) ? 3 : 2;
+            if((x-this.rows/2) == 0 && (y-this.cols/2) == 0){
+              continue;
+            }
+            var body = new Cube(2, type);
             body.color = [1.0,1.0,1.0,1.0];
+            // console.log(x,y, x-this.rows/2,h-1,y-this.cols/2)
             body.matrix.translate(x-this.rows/2,h-1,y-this.cols/2);
             body.render();
           }
@@ -106,29 +112,29 @@ class WebGLRenderer {
     gl.clearColor(...currentColor, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    // var floor = new Cube(-2,2);
-    // floor.color = [0.05,0.8,0.05,1.0];
-    // // floor.textureNum = 0;
-    // floor.matrix.translate(0,-0.5,0.0);
-    // floor.matrix.scale(32, 0.01, 32);
-    // // floor.matrix.translate(-0.5,0,-0.5);
-    // floor.render();
+    var floor = new Cube(-2,2);
+    floor.color = [0.49, 0.788, 0.29,1.0];
+    // floor.textureNum = 0;
+    floor.matrix.translate(0,-0.5,0.0);
+    floor.matrix.scale(32, 0.01, 32);
+    // floor.matrix.translate(-0.5,0,-0.5);
+    floor.render();
     
 
-    // var sky = new Cube(-2,1);
-    // sky.color = [0.0,0.0,1.0,1.0];
-    // // sky.textureNum = -2;
-    // sky.matrix.scale(100, 100, 100);
-    // sky.render();
+    var sky = new Cube(-2,1);
+    sky.color = [0.235, 0.639, 1,1.0];
+    // sky.textureNum = -2;
+    sky.matrix.scale(100, 100, 100);
+    sky.render();
 
-    // draw a cube
-    var body = new Cube(2,3);
-    body.matrix.setTranslate(0,0,0);
-    body.color = [1.0,0.0,0.0,1.0];
-    body.matrix.scale(1, 1, 1);
-    body.render();
+    // // draw a cube
+    // var body = new Cube(2,2);
+    // body.matrix.setTranslate(0,0,0);
+    // body.color = [1.0,0.0,0.0,1.0];
+    // body.matrix.scale(1, 1, 1);
+    // body.render();
 
-    // this.drawMap();
+    this.drawMap();
     // time taken to draw
     var duration = performance.now() - startTime;
     document.getElementById("perf").innerHTML = "Time Taken in rendering: " + duration.toFixed(3)  + " ms, fps: " + (1000 / duration).toFixed(2)+ "";

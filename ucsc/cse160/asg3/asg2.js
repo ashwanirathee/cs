@@ -5,8 +5,8 @@ const animationTimelessOff_Component = document.getElementById("animationTimeles
 const animationPokeOn_Component = document.getElementById("animationPokeOn");
 const animationPokeOff_Component = document.getElementById("animationPokeOff");
 
-let g_globalAngleX = 5;
-let g_globalAngleY = 5;
+let g_globalAngleX = 0;
+let g_globalAngleY = 0;
 
 let animationTimeless = false;
 let animationPoke = false;
@@ -153,14 +153,12 @@ function sendTextureToTEXTURE0(image) {
 
   // Set the texture parameters
   // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 
-  // gl.generateMipmap(gl.TEXTURE_2D);
-
-  
+  // gl.generateMipmap(gl.TEXTURE_2D);Q
 
   // Set the texture image
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
@@ -201,31 +199,67 @@ function sendTextureToTEXTURE1(image) {
 }
 
 
+// function sendTextureToTEXTURE2(image) {
+//   texture2 = gl.createTexture();   // Create a texture object
+//   if (!texture2) {
+//     console.log('Failed to create the texture object');
+//     return false;
+//   }
+
+//   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
+//   // gl.pixelStorei(gl.UNPACK_FLIP_X_WEBGL, 0);;
+//   // Enable texture unit0
+//   gl.activeTexture(gl.TEXTURE2);
+//   // Bind the texture object to the target
+//   gl.bindTexture(gl.TEXTURE_2D, texture2);
+
+//   // Set the texture parameters
+//   // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+//   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+//   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
+//   // Set the texture image
+//   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
+//   gl.generateMipmap(gl.TEXTURE_2D);
+//   // Set the texture unit 0 to the sampler
+//   gl.uniform1i(u_Sampler2, 2);
+  
+//   // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
+// // 
+//   // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
+// }
+
 function sendTextureToTEXTURE2(image) {
-  texture2 = gl.createTexture();   // Create a texture object
+  texture2 = gl.createTexture(); // Create a texture object
   if (!texture2) {
     console.log('Failed to create the texture object');
     return false;
   }
 
-  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
-  // gl.pixelStorei(gl.UNPACK_FLIP_X_WEBGL, 0);;
-  // Enable texture unit0
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y-axis
   gl.activeTexture(gl.TEXTURE2);
-  // Bind the texture object to the target
   gl.bindTexture(gl.TEXTURE_2D, texture2);
 
-  // Set the texture parameters
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-  // Set the texture image
+  // Set the texture image first
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
-  
-  // Set the texture unit 0 to the sampler
+
+  // Function to check if a value is a power of two
+  function isPowerOf2(value) {
+    return (value & (value - 1)) === 0;
+  }
+
+  if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
+    // If texture is power-of-two, enable mipmaps
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+    gl.generateMipmap(gl.TEXTURE_2D);
+  } else {
+    // If texture is NOT power-of-two, use LINEAR filtering (NO mipmaps allowed)
+    console.warn("Texture is NPOT, disabling mipmaps.");
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  }
+
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
   gl.uniform1i(u_Sampler2, 2);
-  
-  // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
-// 
-  // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
 }
 
 function addEventListeners(){
@@ -242,47 +276,34 @@ function addEventListeners(){
     renderAllShapes();
   });
 
-  canvas.onmousemove = click;
-  canvas.addEventListener("mouseup", onMouseUp);
+  canvas.onmousemove = handleMouseMove;
+  canvas.onmouseleave = handleMouseLeave;
+  canvas.onmousedown = handleMouseDown;
+  canvas.addEventListener("contextmenu", (event) => {
+    event.preventDefault(); // Disable right-click menu
+    // console.log("Right-click menu disabled on canvas!");
+  });
+  // canvas.addEventListener("mouseup", onMouseUp);
 
   document.addEventListener('keydown', function(event) {
-    var oX;
-    var oY;
-    var step = 0.5
     switch(event.key) {
       case 'w':
-        // console.log('W key pressed');
-        // camera.cameraZ-=0.5
-        console.log("W moved:")
-        // console.log("Camera Z before:", camera.cameraZ)
-        camera.moveForward(step);
-        // console.log("Camera Z after:", camera.cameraZ)
+        camera.moveForward()
         break;
       case 'a':
-        // console.log('A key pressed');
-        // camera.cameraX -=0.5
-        console.log("A moved:")
-        camera.moveLeft(step)
+        camera.moveLeft()
         break;
       case 's':
-        // console.log('S key pressed');
-        // camera.cameraZ +=0.5
-        console.log("s moved:")
-        camera.moveBackward(step)
+       camera.moveBackward()
         break;
       case 'd':
-        // console.log('D key pressed');
-        // camera.cameraX +=0.5
-        console.log("d moved:")
-        camera.moveRight(step) 
+        camera.moveRight() 
         break;
       case 'q':
-        console.log('q moved, pan toward left')
-        // var anglechange = -Math.PI/50;
-        // camera.panYaw(anglechange);
+        camera.panLeft()
         break;
       case 'e':
-        console.log("e moved, pan towards right")
+        camera.panRight();
         break;
       default:
         // Handle other keys if needed
@@ -303,12 +324,10 @@ function main() {
   initTextures();
   addEventListeners();
 
-  // debugger;
   g_eye =[0,0,30];
   g_at = [0,0,-1];
   g_up = [0,1,0];
   asp_ratio = canvas.width/canvas.height;
-  // console.log(asp_ratio);
   field_angle = 45; // fov
   near = .1;
   far = 100;
@@ -320,7 +339,7 @@ function main() {
 
 function tick() {
   g_seconds = performance.now() / 1000 - g_startTime;
-  // updateAnimationAngles();
+  updateAnimationAngles();
   renderAllShapes(); // this is same as renderScene();
   requestAnimationFrame(tick);
 }

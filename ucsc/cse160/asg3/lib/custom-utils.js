@@ -120,53 +120,126 @@ let initialY = null;
 
 function click(ev) {
   // if(isChecking == false) return;
-  if (ev.buttons != 1) return;
+  // if (ev.buttons != 1) return;
   // console.log("We noticed something!")
   // Convert the event coordinates to WebGL coordinates
   let [x, y] = convertCoordinatesEventToGL(ev);
   x = parseFloat(x) || 0;
   y = parseFloat(y) || 0;
+  console.log(x)
 
-  // If this is the start of the drag, store the initial position
-  if (initialX === null || isNaN(initialX) || initialY === null || isNaN(initialY)) {
-    initialX = x;
-    initialY = y;
-  }
+  // // If this is the start of the drag, store the initial position
+  // if (initialX === null || isNaN(initialX) || initialY === null || isNaN(initialY)) {
+  //   initialX = x;
+  //   initialY = y;
+  // }
 
-  // Calculate the difference between the current and initial positions
-  let deltaX = x - initialX;
-  let deltaY = y - initialY;
+  // // Calculate the difference between the current and initial positions
+  // let deltaX = x - initialX;
+  // let deltaY = y - initialY;
   // console.log(g_globalAngleY," ", g_globalAngleX)
-  if (!isNaN(deltaX) && !isNaN(deltaY)) {
-    if (Math.abs(deltaY) > Math.abs(deltaX)) {
-      g_globalAngleY += deltaY * 50;
-      g_globalAngleY = Math.max(0, Math.min(360, Math.floor(g_globalAngleY))); // Limit between 0 and 360
-    } else {
-      g_globalAngleX -= deltaX * 50;
-      g_globalAngleX = Math.max(0, Math.min(360, Math.floor(g_globalAngleX))); // Limit between 0 and 360
-    }
-  }
+  // if (!isNaN(deltaX) && !isNaN(deltaY)) {
+  //   if (Math.abs(deltaY) > Math.abs(deltaX)) {
+  //     g_globalAngleY += deltaY * 50;
+  //     g_globalAngleY = Math.max(0, Math.min(360, Math.floor(g_globalAngleY))); // Limit between 0 and 360
+      
+  //   } else {
+  //     g_globalAngleX -= deltaX * 50;
+  //     g_globalAngleX = Math.max(0, Math.min(360, Math.floor(g_globalAngleX))); // Limit between 0 and 360
+  //   }
+  // }
+  // if(deltaX > 0){
+    camera.panLeft()
+  // } else {
+    // camera.panRight()
+  // }
 
-  if (!isNaN(g_globalAngleX)) {
-    angleSlideX_component.value = g_globalAngleX;
-  } else {
-    g_globalAngleX = angleSlideX_component.value;
-  }
-  if (!isNaN(g_globalAngleY)) {
-    angleSlideY_component.value = g_globalAngleY;
-  } else {
-    g_globalAngleY = angleSlideY_component.value;
-  }
+  // if (!isNaN(g_globalAngleX)) {
+  //   angleSlideX_component.value = g_globalAngleX;
+  // } else {
+  //   g_globalAngleX = angleSlideX_component.value;
+  // }
+  // if (!isNaN(g_globalAngleY)) {
+  //   angleSlideY_component.value = g_globalAngleY;
+  // } else {
+  //   g_globalAngleY = angleSlideY_component.value;
+  // }
   // console.log(g_globalAngleY," ", g_globalAngleX)
 
   // Log the changes (optional)
   // console.log(`Delta X: ${deltaX}, Delta Y: ${deltaY}`);
 
   // Update the initial position to the current position for the next iteration
-  initialX = x;
-  initialY = y;
+  // initialX = x;
+  // initialY = y;
 
   renderAllShapes();
+}
+
+var lastMousePosition = [0,0];
+var mouseDelta = [0,0];
+function handleMouseMove(event) {
+  const currentMousePosition = [event.clientX, event.clientY];
+  var xoffset;
+  if (lastMousePosition) {
+      xoffset = currentMousePosition[0] - lastMousePosition[0];
+      // const yoffset = lastMousePosition[1] - currentMousePosition[1]; // invert y ax
+  }
+  if(xoffset > 0){
+    camera.panLeft();
+  } else {
+    camera.panRight();
+  }
+
+  lastMousePosition = currentMousePosition;
+}
+
+function handleMouseLeave(event){
+  lastMousePosition = [0,0];
+}
+
+function handleMouseDown(event){
+  if (event.button === 0) {
+    console.log("Left click on canvas!");
+    // we destroy!
+    // let cam
+    console.log(camera.eye, camera.at);
+    var res = pickBlock(camera, renderer, 1);
+    console.log("Res:",res);
+    if(res.gridX!=null){
+      console.log("GMAP:",renderer.g_map)
+      renderer.g_map[res.gridX][res.gridY] = 0;
+      console.log("GMAPAfter:",renderer.g_map)
+    }
+    // if()
+  } else if (event.button === 2) {
+    console.log("Right click on canvas!");
+    console.log(camera.eye, camera.at);
+    var res = pickBlock(camera, renderer, 1);
+    console.log("Res:",res);
+    if(res.gridX!=null){
+      console.log("GMAP:",renderer.g_map)
+      renderer.g_map[res.gridX][res.gridY] = 1;
+      console.log("GMAPAfter:",renderer.g_map)
+    }
+    // we add!
+
+  }
+}
+
+function pickBlock(camera, world, distance = 1) {
+  let forward = camera.at.clone().sub(camera.eye);
+  forward.normalize();
+
+  // Compute a point "distance" units in front of the camera
+  let targetPos = camera.eye.clone().add(forward.mul(distance));
+
+  // Convert world coordinates to grid indices.
+  // Note: camera.eye and targetPos are in world coordinates.
+  let gridX = Math.round(targetPos.elements[0] + world.rows / 2);
+  let gridY = Math.round(targetPos.elements[2] + world.cols / 2);
+
+  return { gridX, gridY };
 }
 
 function convertCoordinates(ev) {
