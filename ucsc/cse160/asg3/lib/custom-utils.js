@@ -203,24 +203,24 @@ function handleMouseDown(event){
     console.log("Left click on canvas!");
     // we destroy!
     // let cam
-    console.log(camera.eye, camera.at);
+    // console.log(camera.eye, camera.at);
     var res = pickBlock(camera, renderer, 1);
-    console.log("Res:",res);
+    // console.log("Res:",res);
     if(res.gridX!=null){
-      console.log("GMAP:",renderer.g_map)
+      // console.log("GMAP:",renderer.g_map)
       renderer.g_map[res.gridX][res.gridY] = 0;
-      console.log("GMAPAfter:",renderer.g_map)
+      // console.log("GMAPAfter:",renderer.g_map)
     }
     // if()
   } else if (event.button === 2) {
-    console.log("Right click on canvas!");
-    console.log(camera.eye, camera.at);
+    // console.log("Right click on canvas!");
+    // console.log(camera.eye, camera.at);
     var res = pickBlock(camera, renderer, 1);
-    console.log("Res:",res);
+    // console.log("Res:",res);
     if(res.gridX!=null){
-      console.log("GMAP:",renderer.g_map)
-      renderer.g_map[res.gridX][res.gridY] = 1;
-      console.log("GMAPAfter:",renderer.g_map)
+      if(renderer.g_map[res.gridX][res.gridY] == 0){
+        renderer.g_map[res.gridX][res.gridY] = 1;
+      }
     }
     // we add!
 
