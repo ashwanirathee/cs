@@ -12,23 +12,7 @@ class Cube {
       this.setUvs();
     }
     
-    generateVertices(){
-      // let v = [
-      //   0.0,0.0,0.0, 0.0,1.0,0.0, 1.0,1.0,0.0,
-      //   0.0,0.0,0.0, 1.0,1.0,0.0, 1.0,0.0,0.0,
-      //    //bottom
-      //   0.0,1.0,0.0, 0.0,1.0,1.0, 1.0,1.0,1.0,
-      //   0.0,1.0,0.0, 1.0,1.0,1.0, 1.0,1.0,0.0, // behind
-      //   0.0,0.0,0.0, 0.0,0.0,1.0, 0.0,1.0,1.0,
-      //   0.0,0.0,0.0, 0.0,1.0,1.0, 0.0,1.0,0.0, // left up
-      //   0.0,0.0,0.0, 0.0,0.0,1.0, 1.0,0.0,1.0,
-      //   0.0,0.0,0.0, 1.0,0.0,1.0, 1.0,0.0,0.0, // front
-      //   1.0,0.0,0.0, 1.0,0.0,1.0, 1.0,1.0,1.0,
-      //   1.0,0.0,0.0, 1.0,1.0,1.0, 1.0,1.0,0.0, // this right
-      //   0.0,0.0,1.0, 0.0,1.0,1.0, 1.0,1.0,1.0,
-      //   0.0,0.0,1.0, 1.0,1.0,1.0, 1.0,0.0,1.0
-      // ];
-  
+    generateVertices(){  
       //this.vertices = new Float32Array(v);
       this.vertices = new Float32Array([
         //FRONT
@@ -61,7 +45,7 @@ class Cube {
       if(this.textureNum === 2){
         var x = 0;
         var y = 1;
-        var eps = 0.03;
+        var eps = 0.1;
         // var offx = 1
         this.uvs = new Float32Array([
           // FRONT
@@ -89,7 +73,7 @@ class Cube {
       } else if (this.textureNum === 3){
         var x = 10;
         var y = 0;
-        var eps = 0.04;
+        var eps = 0.1;
         // var offx = 1
         this.uvs = new Float32Array([
           // FRONT
@@ -115,6 +99,35 @@ class Cube {
           (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
         ]);
        
+      } else if(this.textureNum === 4){
+        // gold target
+        var x = 0;
+        var y = 11;
+        var eps = 0.1;
+        // var offx = 1
+        this.uvs = new Float32Array([
+          // FRONT
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, 
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
+          // LEFT
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, 
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
+        
+          // RIGHT
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, 
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
+        
+          // TOP
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, 
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
+          // BACK
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, 
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
+        
+          // BOTTOM
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, 
+          (x + eps)/ntex, (y + 1 - eps)/ntex, (x + 1 - eps)/ntex, (y + eps)/ntex, (x + 1 - eps)/ntex, (y + 1 - eps)/ntex,
+        ]);
       } else {
         this.uvs = new Float32Array([
           // FRONT

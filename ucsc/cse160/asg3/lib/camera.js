@@ -1,7 +1,7 @@
 class Camera {
     constructor(g_eye, g_at, g_up, field_angle, asp_ratio, near_plane, far_plane) {
 
-        this.eye = new Vector3([0, 0, 0]);
+        this.eye = new Vector3([-14, 0, 14]);
         this.fov = 60.0;
         this.at = new Vector3([0, 0, -1]);
         this.up = new Vector3([0, 1, 0]);

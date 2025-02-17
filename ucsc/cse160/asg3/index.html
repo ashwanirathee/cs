@@ -34,95 +34,18 @@
 </style>
 
 <body onload="main()">
-  <div class="column"> <canvas id="webgl_canvas">
-    Please use a browser that supports "canvas"
-  </canvas></div>
   <div class="container">
+    <div class="column"> <canvas id="webgl_canvas">
+      Please use a browser that supports "canvas"
+    </canvas></div>
     <div class="column">
       <p>
-        To gain back access of the controls, turn off both animations. 
-        To use mouse for rotation, bottom to up mouse drag(after click on canvas and move) movement will take you in +y direction and right to left movement for +x according to the slider.
+        Find the gold and break it! 
+        <ul>
+          <li></li>
+        </ul>
       </p>
       <p id="perf">perfstats:</p>
-      <p>
-        Camera Angle X
-        <input type="range" min="0" max="360" value="0" id="angleSlideX">
-      </p>
-      <p>
-        Camera Angle Y
-        <input type="range" min="0" max="360" value="0" id="angleSlideY">
-      </p>
-      <p>
-        Timeless Sequence Animation 1:
-        <button type="button" id="animationTimelessOn">ON</button>
-        <button type="button" id="animationTimelessOff">OFF</button>
-      </p>
-      <p>
-        Poke Sequence Animation 2:
-        <button type="button" id="animationPokeOn">ON</button>
-        <button type="button" id="animationPokeOff">OFF</button>
-      </p>
-
-
-      <label for="body_angle_html">Body Angle:</label>
-      <input type="range" min="-90" max="90" value="0" id="body_angle_html"
-        oninput="updateValue('body_angle_html', 'body', 'body_angle_value')">
-      <span id="body_angle_value">0</span>
-      <br>
-
-      <label for="neck_angle_html">Neck Angle:</label>
-      <input type="range" min="-45" max="0" value="-45" id="neck_angle_html"
-        oninput="updateValue('neck_angle_html', 'neck', 'neck_angle_value')">
-      <span id="neck_angle_value">0</span>
-      <br>
-
-      <label for="face_angle_html">Face Angle:</label>
-      <input type="range" min="85" max="95" value="90" id="face_angle_html"
-        oninput="updateValue('face_angle_html', 'face', 'face_angle_value')">
-      <span id="face_angle_value">0</span>
-      <br>
-
-      <label for="tail_angle_html">Tail Angle:</label>
-      <input type="range" min="-180" max="-60" value="-160" id="tail_angle_html"
-        oninput="updateValue('tail_angle_html', 'tail', 'tail_angle_value')">
-      <span id="tail_angle_value">0</span>
-      <br>
-
-      <label for="tail_angle2_html">Tail Joint 2 Angle:</label>
-      <input type="range" min="90" max="180" value="90" id="tail_angle2_html"
-        oninput="updateValue('tail_angle2_html', 'tail_part2', 'tail_angle2_value')">
-      <span id="tail_angle2_value">0</span>
-      <br>
-
-      <label for="tail_angle3_html">Tail Joint 3 Angle:</label>
-      <input type="range" min="180" max="270" value="270" id="tail_angle3_html"
-        oninput="updateValue('tail_angle3_html', 'tail_part3', 'tail_angle3_value')">
-      <span id="tail_angle3_value">0</span>
-      <br>
-
-      <label for="leg_front_left_angle_html">Front Left Leg Angle:</label>
-      <input type="range" min="-15" max="15" value="0" id="leg_front_left_angle_html"
-        oninput="updateValue('leg_front_left_angle_html', 'leg_front_left', 'leg_front_left_angle_value')">
-      <span id="leg_front_left_angle_value">0</span>
-      <br>
-
-      <label for="leg_front_right_angle_html">Front Right Leg Angle:</label>
-      <input type="range" min="-15" max="15" value="0" id="leg_front_right_angle_html"
-        oninput="updateValue('leg_front_right_angle_html', 'leg_front_right', 'leg_front_right_angle_value')">
-      <span id="leg_front_right_angle_value">0</span>
-      <br>
-
-      <label for="leg_rear_left_angle_html">Rear Left Leg Angle:</label>
-      <input type="range" min="-15" max="15" value="0" id="leg_rear_left_angle_html"
-        oninput="updateValue('leg_rear_left_angle_html', 'leg_rear_left', 'leg_rear_left_angle_value')">
-      <span id="leg_rear_left_angle_value">0</span>
-      <br>
-
-      <label for="leg_rear_right_angle_html">Rear Right Leg Angle:</label>
-      <input type="range" min="-15" max="15" value="0" id="leg_rear_right_angle_html"
-        oninput="updateValue('leg_rear_right_angle_html', 'leg_rear_right', 'leg_rear_right_angle_value')">
-      <span id="leg_rear_right_angle_value">0</span>
-      <br>
     </div>
   </div>
 
@@ -131,7 +54,6 @@
   <script src="./lib/webgl-debug.js"></script>
   <script src="./lib/cuon-matrix-cse160.js"></script>
   <script src="./lib/cuon-utils.js"></script>
-
   <script src="./lib/renderer.js"></script>
   <script src="./lib/global.js"></script>
   <script src="./lib/shaders.js"></script>

@@ -10,22 +10,24 @@ class WebGLRenderer {
   drawMap(){
     if(this.g_map == null){
       this.g_map = this.generateMaze(this.rows, this.cols);
-      console.log(this.g_map)
     }
     var x;
     var y;
-    // console.log('New Case')
-    // console.log(this.g_map)
     for(x=0;x<=this.rows;x++){
       for(y=0;y<=this.cols;y++){
         if(this.g_map[x][y] > 0){
           
           for(var h = 1; h<=this.g_map[x][y];h++){
             // console.log(this.g_map[x][y])
-            var type = (x === 0 || y === 0) ? 3 : 2;
-            if((x-this.rows/2) == 0 && (y-this.cols/2) == 0){
-              continue;
+            var type;
+            if ((x === 0 || y === 0)){
+              type = 3;
+            } else if(h <= 1 ){
+              type = 3
+            } else {
+              type = 2;
             }
+
             var body = new Cube(2, type);
             body.color = [1.0,1.0,1.0,1.0];
             // console.log(x,y, x-this.rows/2,h-1,y-this.cols/2)
@@ -34,51 +36,55 @@ class WebGLRenderer {
           }
 
         }
+        if(this.g_map[x][y] == -1){
+              // draw a cube
+          var body = new Cube(2,4);
+          body.matrix.setTranslate(x-this.rows/2,1,y-this.cols/2);
+          body.color = [1.0,0.0,0.0,1.0];
+          body.matrix.scale(1, 10, 1);
+          body.render();
+        }
       }
     }
   }
 
 
   generateMaze(width, height) {
-    // console.log("generate")
-    // Ensure odd dimensions for proper walls
-    width = Math.floor(width / 2) * 2 + 1;
-    height = Math.floor(height / 2) * 2 + 1;
-
-    const maze = Array.from({ length: height }, () => Array(width).fill(1)); // 1 represents walls
-    const stack = [[1, 1]];
-    maze[1][1] = 0; // 0 represents a path
-
-    const directions = [
-      [0, 2],
-      [2, 0],
-      [0, -2],
-      [-2, 0],
-    ]; // Move in grid
-
-    while (stack.length > 0) {
-      const [x, y] = stack[stack.length - 1];
-      const neighbors = [];
-
-      for (const [dx, dy] of directions) {
-        const nx = x + dx;
-        const ny = y + dy;
-        if (nx > 0 && nx < height - 1 && ny > 0 && ny < width - 1 && maze[nx][ny] === 1) {
-          neighbors.push([nx, ny]);
-        }
-      }
-
-      if (neighbors.length > 0) {
-        const [nx, ny] = neighbors[Math.floor(Math.random() * neighbors.length)];
-        maze[(x + nx) / 2][(y + ny) / 2] = 0; // Remove the wall
-        maze[nx][ny] = 0; // Mark as part of the maze
-        stack.push([nx, ny]);
-      } else {
-        stack.pop();
-      }
-    }
-    // console.log("hi:",maze);
-
+    const maze = [
+      [3, 4, 4, 4, 2, 3, 2, 3, 2, 3, 3, 2, 2, 4, 3, 4, 3, 4, 3, 3, 2, 4, 4, 3, 2, 2, 3, 2, 4, 4, 3, 2, 4],
+      [2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 4],
+      [3, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 3],
+      [4, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+      [3, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 4],
+      [3, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 2],
+      [3, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 2],
+      [2, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 3],
+      [2, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 2],
+      [4, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 4],
+      [2, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 4],
+      [2, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 3],
+      [2, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 4],
+      [3, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 3],
+      [4, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 3],
+      [2, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 4],
+      [4, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 2],
+      [2, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 3],
+      [4, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 3],
+      [2, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 4],
+      [2, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 4],
+      [3, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 2],
+      [2, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 4],
+      [4, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 4],
+      [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 3],
+      [4, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 2],
+      [3, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 2],
+      [2, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 4],
+      [2, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 4],
+      [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 2],
+      [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 3],
+      [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
+      [3, 4, 4, 2, 2, 2, 2, 4, 2, 2, 3, 2, 3, 3, 4, 2, 4, 2, 3, 3, 4, 4, 2, 3, 3, 3, 2, 4, 2, 2, 4, 2, 3]
+    ];
     // Define starting and ending points
     maze[1][1] = 0; // Start point at the top-left corner
     maze[height - 2][width - 2] = 0; // End point at the bottom-right corner
@@ -86,12 +92,19 @@ class WebGLRenderer {
     for(var x=0;x<height;x++){
       for(var y=0;y<width;y++){
         // console.log("ehre:", x,y)
-        if(x === 0 || y === 0 || x === height-1 || y === width-1){
+        // if(x === 0 || y === 0 || x === height-1 || y === width-1){
+        //   maze[x][y] += Math.floor(Math.random() * 3) + 1;;
+        //   // console.log(maze[x][y])
+        // }
+        // maze[x][y]
+        if(maze[x][y] > 0){
           maze[x][y] += Math.floor(Math.random() * 3) + 1;;
           // console.log(maze[x][y])
         }
       }
     }
+
+    maze[31][2] = -1
     return maze;
   }
   
@@ -127,11 +140,11 @@ class WebGLRenderer {
     sky.matrix.scale(100, 100, 100);
     sky.render();
 
-    // // draw a cube
-    // var body = new Cube(2,2);
-    // body.matrix.setTranslate(0,0,0);
+    // draw a cube
+    // var body = new Cube(2,4);
+    // body.matrix.setTranslate(14,0,-14);
     // body.color = [1.0,0.0,0.0,1.0];
-    // body.matrix.scale(1, 1, 1);
+    // body.matrix.scale(1, 10, 1);
     // body.render();
 
     this.drawMap();

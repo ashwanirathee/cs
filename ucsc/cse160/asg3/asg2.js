@@ -1,15 +1,5 @@
-const angleSlideX_component = document.getElementById("angleSlideX");
-const angleSlideY_component = document.getElementById("angleSlideY");
-const animationTimelessOn_Component = document.getElementById("animationTimelessOn");
-const animationTimelessOff_Component = document.getElementById("animationTimelessOff");
-const animationPokeOn_Component = document.getElementById("animationPokeOn");
-const animationPokeOff_Component = document.getElementById("animationPokeOff");
-
 let g_globalAngleX = 0;
 let g_globalAngleY = 0;
-
-let animationTimeless = false;
-let animationPoke = false;
 
 function updateValue(id, key, outputId) {
   let value = document.getElementById(id).value;
@@ -17,80 +7,13 @@ function updateValue(id, key, outputId) {
   document.getElementById(outputId).textContent = value;
 }
 
-let angles = {
-  body: 0,
-  neck: -45,
-  face: 90,
-  tail: -160,
-  tail_part2: 180,
-  tail_part3: 270,
-  leg_front_left: 0,
-  leg_front_right: 0,
-  leg_rear_left: 0,
-  leg_rear_right: 0,
-};
-
 const audio = new Audio("minecraft.mp3"); // Replace with your sound file path
 audio.loop = true; // Enable looping
+audio.play();
 
-const audio1 = new Audio("thud.mp3"); // Replace with your sound file path
-audio1.loop = true; // Enable looping
-
-var animationPokeStartTime = 0;
-var animationPokeseconds = 0;
 var g_startTime = performance.now() / 1000.0;
 var g_seconds = performance.now() / 1000.0 - g_startTime;
 
-function updateAnimationAngles() {
-  if (animationTimeless) {
-    console.log("Timeless Sequence Triggered");
-    angles["body"] = 2 * Math.sin(g_seconds);
-    angles["neck"] = -45 + 5 * Math.sin(g_seconds);
-    angles["face"] = 90 + Math.sin(g_seconds);
-    speed = 10;
-    angles["tail"] = -160 + 5 * Math.sin((speed / 5) * g_seconds);
-    angles["tail_part2"] = 165 + 15 * Math.sin((speed / 5) * g_seconds);
-    angles["tail_part3"] = 265 + 15 * Math.sin((speed / 5) * g_seconds);
-    angles["leg_front_left"] = 15 * Math.sin(speed * g_seconds);
-    angles["leg_front_right"] = -15 * Math.sin(speed * g_seconds);
-    angles["leg_rear_left"] = 15 * Math.sin(speed * g_seconds);
-    angles["leg_rear_right"] = -15 * Math.sin(speed * g_seconds);
-  }
-
-  if (animationPoke) {
-    console.log("Poke Sequence Triggered");
-    // console.log(g_seconds)
-    if (animationPokeseconds == 0) {
-      animationPokeStartTime = g_seconds;
-      animationPokeseconds = animationPokeseconds + 0.001;
-    } else {
-      angles["tail"] = 45 + 15 * Math.sin(5 * animationPokeseconds);
-      angles["body"] = 15 + 10 * Math.sin(5 * animationPokeseconds);
-      var angle = 45 + 45 * Math.sin(10 * animationPokeseconds);
-      // console.log(angle)
-      angles["leg_rear_left"] = angle;
-      angles["leg_rear_right"] = angle;
-      angles["leg_front_right"] = -(10 + 10 * Math.sin(10 * animationPokeseconds));
-      angles["leg_front_left"] = -(10 + 10 * Math.sin(10 * animationPokeseconds));
-      angles["tail"] = -70 - 15 * Math.sin((10 / 5) * g_seconds);
-      angles["tail_part2"] = 165 + 15 * Math.sin((10 / 5) * g_seconds);
-      angles["tail_part3"] = 265 + 15 * Math.sin((10 / 5) * g_seconds);
-      animationPokeseconds = animationPokeseconds + 0.001;
-      if (angle > 80) {
-        animationPoke = false;
-        animationPokeseconds = 0;
-        audio1.pause();
-        audio1.currentTime = 0; // Reset the audio
-        angles["body"] = 0;
-        angles["leg_rear_left"] = 0;
-        angles["leg_rear_right"] = 0;
-        angles["leg_front_right"] = 0;
-        angles["leg_front_left"] = 0;
-        angles["tail"] = -170;
-      }
-    }
-  }
-}
 function init() {
   // scene graph which holds all the shapes
   scene = new SceneGraph();
@@ -145,30 +68,15 @@ function sendTextureToTEXTURE0(image) {
   }
 
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
-  // gl.pixelStorei(gl.UNPACK_FLIP_X_WEBGL, 0);;
-  // Enable texture unit0
   gl.activeTexture(gl.TEXTURE0);
-  // Bind the texture object to the target
   gl.bindTexture(gl.TEXTURE_2D, texture0);
-
-  // Set the texture parameters
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-  // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-
-  // gl.generateMipmap(gl.TEXTURE_2D);Q
-
-  // Set the texture image
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
   
   // Set the texture unit 0 to the sampler
   gl.uniform1i(u_Sampler0, 0);
   
-  // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
-// 
-  // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
 }
 
 function sendTextureToTEXTURE1(image) {
@@ -192,42 +100,8 @@ function sendTextureToTEXTURE1(image) {
   
   // Set the texture unit 0 to the sampler
   gl.uniform1i(u_Sampler1, 1);
-  
-  // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
-// 
-  // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
 }
 
-
-// function sendTextureToTEXTURE2(image) {
-//   texture2 = gl.createTexture();   // Create a texture object
-//   if (!texture2) {
-//     console.log('Failed to create the texture object');
-//     return false;
-//   }
-
-//   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
-//   // gl.pixelStorei(gl.UNPACK_FLIP_X_WEBGL, 0);;
-//   // Enable texture unit0
-//   gl.activeTexture(gl.TEXTURE2);
-//   // Bind the texture object to the target
-//   gl.bindTexture(gl.TEXTURE_2D, texture2);
-
-//   // Set the texture parameters
-//   // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-//   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-//   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-
-//   // Set the texture image
-//   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
-//   gl.generateMipmap(gl.TEXTURE_2D);
-//   // Set the texture unit 0 to the sampler
-//   gl.uniform1i(u_Sampler2, 2);
-  
-//   // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
-// // 
-//   // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
-// }
 
 function sendTextureToTEXTURE2(image) {
   texture2 = gl.createTexture(); // Create a texture object
@@ -263,19 +137,6 @@ function sendTextureToTEXTURE2(image) {
 }
 
 function addEventListeners(){
-  // adds the event listeners for various events
-  // addEventListeners();
-  angleSlideX_component.addEventListener("mousemove", () => {
-    g_globalAngleX = angleSlideX_component.value;
-    renderAllShapes();
-  });
-
-  angleSlideY_component.addEventListener("mousemove", () => {
-    // console.log("Angle Slide being changed")
-    g_globalAngleY = angleSlideY_component.value;
-    renderAllShapes();
-  });
-
   canvas.onmousemove = handleMouseMove;
   canvas.onmouseleave = handleMouseLeave;
   canvas.onmousedown = handleMouseDown;
@@ -339,7 +200,6 @@ function main() {
 
 function tick() {
   g_seconds = performance.now() / 1000 - g_startTime;
-  updateAnimationAngles();
   renderAllShapes(); // this is same as renderScene();
   requestAnimationFrame(tick);
 }
