@@ -7,10 +7,6 @@ function updateValue(id, key, outputId) {
   document.getElementById(outputId).textContent = value;
 }
 
-const audio = new Audio("minecraft.mp3"); // Replace with your sound file path
-audio.loop = true; // Enable looping
-audio.play();
-
 var g_startTime = performance.now() / 1000.0;
 var g_seconds = performance.now() / 1000.0 - g_startTime;
 
@@ -70,11 +66,11 @@ function sendTextureToTEXTURE0(image) {
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
   gl.activeTexture(gl.TEXTURE0);
   gl.bindTexture(gl.TEXTURE_2D, texture0);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
   
-  // Set the texture unit 0 to the sampler
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
   gl.uniform1i(u_Sampler0, 0);
   
 }
@@ -144,7 +140,6 @@ function addEventListeners(){
     event.preventDefault(); // Disable right-click menu
     // console.log("Right-click menu disabled on canvas!");
   });
-  // canvas.addEventListener("mouseup", onMouseUp);
 
   document.addEventListener('keydown', function(event) {
     switch(event.key) {
@@ -190,7 +185,7 @@ function main() {
   g_up = [0,1,0];
   asp_ratio = canvas.width/canvas.height;
   field_angle = 45; // fov
-  near = .1;
+  near = .001;
   far = 100;
   camera = new Camera(g_eye, g_at, g_up, field_angle, asp_ratio, near, far);
 
