@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGL Triangle</title>
+</head>
+<body>
+    <canvas id="webglCanvas" width="500" height="500"></canvas>
+    <script>
+        // Get WebGL context
+        const canvas = document.getElementById("webglCanvas");
+        const gl = canvas.getContext("webgl");
+
+        // Vertex Shader
+        const vertexShaderSource = `
+        precision mediump float;
+        attribute vec2 a_position;
+        void main() {
+            gl_Position = vec4(a_position, 0.0, 1.0);
+        }
+        `;
+
+        // Fragment Shader
+        const fragmentShaderSource = `
+        precision mediump float;
+        uniform vec4 u_BaseColor;
+        void main() {
+            gl_FragColor = u_BaseColor + vec4(1.0, 1.0, 0.0, 0.5);
+        }
+        `;
+
+        // Compile Shader Function
+        function compileShader(gl, source, type) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                console.error("Shader Compilation Error:", gl.getShaderInfoLog(shader));
+                gl.deleteShader(shader);
+                return null;
+            }
+            return shader;
+        }
+
+        // Create and link program
+        const vertexShader = compileShader(gl, vertexShaderSource, gl.VERTEX_SHADER);
+        const fragmentShader = compileShader(gl, fragmentShaderSource, gl.FRAGMENT_SHADER);
+        const program = gl.createProgram();
+        gl.attachShader(program, vertexShader);
+        gl.attachShader(program, fragmentShader);
+        gl.linkProgram(program);
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+            console.error("Program Linking Error:", gl.getProgramInfoLog(program));
+        }
+        gl.useProgram(program);
+
+        // Triangle vertices (x, y)
+        let vertices = new Float32Array([
+            -1.0, -1.0,  // Bottom left
+            -1.0,  1.0,  // Top left
+            1.0,  0.0   // Right
+        ]);
+
+        // Create buffer
+        let vertexBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+        // Get attribute/uniform locations
+        let a_Position = gl.getAttribLocation(program, "a_position");
+        let u_BaseColor = gl.getUniformLocation(program, "u_BaseColor");
+
+        // Enable and set up attribute
+        gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
+        gl.enableVertexAttribArray(a_Position);
+
+        // Set base color
+        gl.uniform4f(u_BaseColor, 0.0, 0.0, 1.0, 0.5);
+
+        // Clear screen and draw
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 2);
+    </script>
+</body>
+</html>
