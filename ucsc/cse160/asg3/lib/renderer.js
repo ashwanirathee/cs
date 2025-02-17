@@ -5,6 +5,7 @@ class WebGLRenderer {
     this.rows = 32;
     this.cols = 32;
     this.g_map = null;
+
   }
 
   drawMap(){
@@ -13,12 +14,11 @@ class WebGLRenderer {
     }
     var x;
     var y;
+    var h;
     for(x=0;x<=this.rows;x++){
       for(y=0;y<=this.cols;y++){
         if(this.g_map[x][y] > 0){
-          
-          for(var h = 1; h<=this.g_map[x][y];h++){
-            // console.log(this.g_map[x][y])
+          for(h = 1; h<=this.g_map[x][y];h++){
             var type;
             if ((x === 0 || y === 0)){
               type = 3;
@@ -29,8 +29,6 @@ class WebGLRenderer {
             }
 
             var body = new Cube(2, type);
-            body.color = [1.0,1.0,1.0,1.0];
-            // console.log(x,y, x-this.rows/2,h-1,y-this.cols/2)
             body.matrix.translate(x-this.rows/2,h-1,y-this.cols/2);
             body.render();
           }
@@ -47,7 +45,6 @@ class WebGLRenderer {
       }
     }
   }
-
 
   generateMaze(width, height) {
     const maze = [
@@ -69,17 +66,17 @@ class WebGLRenderer {
       [2, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 4],
       [4, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 2],
       [2, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 3],
-      [4, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 3],
+      [4, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 3],
       [2, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 4],
       [2, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 4],
       [3, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 2],
-      [2, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 4],
+      [2, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 4],
       [4, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 4],
-      [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 3],
+      [2, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 3],
       [4, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 2],
       [3, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 2],
-      [2, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 4],
-      [2, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 4],
+      [2, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 4],
+      [2, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 4],
       [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 2],
       [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 3],
       [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
@@ -109,10 +106,7 @@ class WebGLRenderer {
   }
   
   render(scene) {
-    // check the time at the start of this function
     var startTime = performance.now();
-    // camera.update();
-    // camera.updateProjectionMatrix ();
 
     var globalRotMat = new Matrix4().rotate(g_globalAngleX, 0, 1, 0);
     globalRotMat.rotate(g_globalAngleY, 1, 0, 0);
@@ -127,28 +121,17 @@ class WebGLRenderer {
 
     var floor = new Cube(-2,2);
     floor.color = [0.49, 0.788, 0.29,1.0];
-    // floor.textureNum = 0;
     floor.matrix.translate(0,-0.5,0.0);
     floor.matrix.scale(32, 0.01, 32);
-    // floor.matrix.translate(-0.5,0,-0.5);
     floor.render();
     
 
     var sky = new Cube(-2,1);
     sky.color = [0.235, 0.639, 1,1.0];
-    // sky.textureNum = -2;
     sky.matrix.scale(100, 100, 100);
     sky.render();
 
-    // draw a cube
-    // var body = new Cube(2,4);
-    // body.matrix.setTranslate(14,0,-14);
-    // body.color = [1.0,0.0,0.0,1.0];
-    // body.matrix.scale(1, 10, 1);
-    // body.render();
-
     this.drawMap();
-    // time taken to draw
     var duration = performance.now() - startTime;
     document.getElementById("perf").innerHTML = "Time Taken in rendering: " + duration.toFixed(3)  + " ms, fps: " + (1000 / duration).toFixed(2)+ "";
   }
