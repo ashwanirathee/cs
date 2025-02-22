@@ -1,0 +1,2 @@
+- https://cs.uwaterloo.ca/~alubiw/CS763/CS763-Lecture2.pdf
+- https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=89541
