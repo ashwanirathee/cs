@@ -76,17 +76,17 @@ var FSHADER_SOURCE = `
       float nDotL = max(dot(N,L),0.0);
       vec3 R = reflect(-L,N);
       vec3 E = normalize(u_CameraPos-vec3(v_VertPos));
-      float specular = pow(max(dot(E,R),0.0), 50.0) * 0.8;
+      float specular = pow(max(dot(E,R),0.0), 50.0) * 1.8;
 
       vec3 diffuse = vec3(1.0,1.0,0.9) * vec3(gl_FragColor) * nDotL * 0.7;
       vec3 ambient = vec3(gl_FragColor) * 0.2;
       if(u_lightStatus == 1){
         if(u_whichTexture == 0){
-          // gl_FragColor = vec4(diffuse + ambient + specular, 1.0);
-          gl_FragColor = vec4(diffuse + ambient, 1.0);
+          gl_FragColor = vec4(diffuse + ambient + specular, 1.0);
+          // gl_FragColor = vec4(diffuse + ambient, 1.0);
         } else {
-          // gl_FragColor = vec4(diffuse + ambient + specular, 1.0);
-          gl_FragColor = vec4(diffuse + ambient, 1.0);
+          gl_FragColor = vec4(diffuse + ambient + specular, 1.0);
+          // gl_FragColor = vec4(diffuse + ambient, 1.0);
         }
       }
     }

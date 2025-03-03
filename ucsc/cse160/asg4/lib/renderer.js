@@ -118,7 +118,7 @@ class WebGLRenderer {
     gl.uniformMatrix4fv(u_GlobalRotateMatrix, false, globalRotMat.elements);
 
     // don't delete these!
-    gl.uniform1i(u_lightStatus, 1);
+    gl.uniform1i(u_lightStatus, lightStatus);
     gl.uniform4fv(u_FragColor, new Float32Array([0.5, 0.5, 0.5, 1.0]));
     gl.uniform3fv(u_lightPos, g_lightpos);
     gl.uniform3fv(a_CameraPos, new Float32Array([camera.at[0], camera.at[1], camera.at[2]]));
