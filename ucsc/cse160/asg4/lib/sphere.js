@@ -1,5 +1,5 @@
  class Sphere {
-  constructor(radius = 0.5, widthSegments = 3, heightSegments = 2) {
+  constructor(radius = 0.5, widthSegments = 3, heightSegments = 2, textureAtlasNum, textureNum) {
     // buffers
     this.vertexBuffer = null;
     this.indexBuffer = null;
@@ -11,7 +11,9 @@
     this.indices = null;
     this.uvs = null;
     this.normals = null;
-
+    this.textureAtlasNum = textureAtlasNum;
+    this.textureNum = textureNum;
+    
     // transformations
     this.position = new Vector3([0, 0, 0]);
     this.rotation = new Vector3([0, 0, 0]);

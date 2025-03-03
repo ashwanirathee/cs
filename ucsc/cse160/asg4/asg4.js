@@ -239,7 +239,7 @@ function tick() {
 
   if(animate_light){
     g_lightpos[0] = 2*Math.sin(g_seconds);
-    g_lightpos[1] = 2*Math.cos(g_seconds);
+    g_lightpos[2] = 2*Math.cos(g_seconds);
   }
 
 }

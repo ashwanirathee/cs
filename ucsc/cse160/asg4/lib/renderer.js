@@ -121,7 +121,7 @@ class WebGLRenderer {
     gl.uniform1i(u_lightStatus, lightStatus);
     gl.uniform4fv(u_FragColor, new Float32Array([0.5, 0.5, 0.5, 1.0]));
     gl.uniform3fv(u_lightPos, g_lightpos);
-    gl.uniform3fv(a_CameraPos, new Float32Array([camera.at[0], camera.at[1], camera.at[2]]));
+    gl.uniform3f(a_CameraPos, camera.eye.elements[0], camera.eye.elements[1], camera.eye.elements[2]);
 
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     let t = Math.sin(0.1 * g_seconds * Math.PI); 
@@ -129,31 +129,30 @@ class WebGLRenderer {
     gl.clearColor(...currentColor, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    let sky = new Cube(-3, 1);
+    let sky = new Cube(2, 2);
     sky.color = [0.235, 0.639, 1, 1.0];
     sky.matrix.scale(-5, -5, -10);
-    if(normalControllerState) sky.textureNum = -3;
+    if(normalControllerState) sky.textureAtlasNum = -3;
     sky.render();
 
-    let body = new Cube(-3,1);
+    let body = new Cube(2,2);
     body.color = [0.49, 0.788, 0.29, 1.0];
     body.matrix.translate(2, 0, 0);
     body.matrix.scale(0.2, 0.2, 0.2);
-    if(normalControllerState) body.textureAtlasNum = -3;
+    // if(normalControllerState) body.textureAtlasNum = -3;
     body.render();
 
-    var ball = new Sphere(1, 10,10); // radius 50, 20x20 resolution
-    ball.matrix.translate(0,0,0);
+    var ball = new Sphere(1, 10,10, 2, 2); // radius 50, 20x20 resolution
+    ball.matrix.translate(-1,-2,-2);
     ball.matrix.scale(1, 1, 1);
     if(normalControllerState) ball.textureAtlasNum = -3;
-    else ball.textureAtlasNum = 0;
     ball.render(gl, camera);
 
     var light = new Cube(-3, 1);
     light.color = [1, 1, 1, 1.0];
     light.matrix.translate(g_lightpos[0], g_lightpos[1], g_lightpos[2]);
     light.matrix.scale(0.1, 0.1, 0.1);
-    // if(normalControllerState) body.textureAtlasNum = -3;
+    if(normalControllerState) body.textureAtlasNum = -3;
     light.render();
 
     // // Draw the maze cubes from the cached instances.
