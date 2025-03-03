@@ -40,12 +40,18 @@ let g_light2pos  = [-12,1.5,13]
 const normalController = document.getElementById("normalController");
 let normalControllerState  = true;
 
+let lightR = 0.0;
+let lightG = 0.0;
+let lightB = 0.0;
 const spotlightController = document.getElementById("spotlightController");
 const lightController = document.getElementById("lightController");
 const lightAnimationController = document.getElementById("lightAnimationController");
 const lightX = document.getElementById("lightX");
 const lightY = document.getElementById("lightY");
 const lightZ = document.getElementById("lightZ");
+const lightXc = document.getElementById("lightXc");
+const lightYc = document.getElementById("lightYc");
+const lightZc = document.getElementById("lightZc");
 
 // let u_lightPos;
 const shape_size = document.getElementById("shape_size");

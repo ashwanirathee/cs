@@ -51,6 +51,7 @@ var FSHADER_SOURCE = `
     varying vec3 v_Normal;
     varying vec4 v_VertPos;
     varying vec2 v_UV;
+    uniform vec3 u_LightColor;
 
     void main() {
       if(u_whichTexture == -6){
@@ -83,7 +84,7 @@ var FSHADER_SOURCE = `
       vec3 E = normalize(u_CameraPos - vec3(v_VertPos));
       float specular = pow(max(dot(E, R), 0.0), 5.0) * 0.8;
     
-      vec3 diffuse = vec3(1.0, 1.0, 0.9) * vec3(gl_FragColor) * nDotL * 0.7;
+      vec3 diffuse = u_LightColor * vec3(gl_FragColor) * nDotL * 0.7;
       vec3 ambient = vec3(gl_FragColor) * 0.3;
       vec3 light1Color = (u_lightStatus == 1) ? (diffuse + ambient + specular) : ambient;
     
@@ -103,7 +104,7 @@ var FSHADER_SOURCE = `
       float specular2 = pow(max(dot(E2, R2), 0.0), 5.0) * 0.8;
     
       // Diffuse and ambient components for the second light
-      vec3 diffuse2 = vec3(1.0, 1.0, 0.9) * vec3(gl_FragColor) * nDotL2 * 0.7;
+      vec3 diffuse2 = u_LightColor * vec3(gl_FragColor) * nDotL2 * 0.7;
       vec3 ambient2 = vec3(gl_FragColor) * 0.3;
     
       // Smooth transition based on theta (light angle)

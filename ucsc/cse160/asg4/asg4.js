@@ -185,6 +185,19 @@ function addEventListeners(){
     g_lightpos[2] = parseFloat(lightZ.value);
   });
 
+  lightXc.addEventListener("input", () => {
+    lightR = parseFloat(lightXc.value);
+  });
+
+  lightYc.addEventListener("input", () => {
+    lightG = parseFloat(lightYc.value);
+  });
+
+  lightZc.addEventListener("input", () => {
+    lightB = parseFloat(lightZc.value);
+  });
+
+
   document.addEventListener('keydown', function(event) {
     switch(event.key) {
       case 'w':

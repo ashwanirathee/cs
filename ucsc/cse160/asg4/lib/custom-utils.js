@@ -74,6 +74,12 @@ function connectVariablesToGLSL() {
     console.log("Failed to get the storage location of u_light2Status");
     return;
   }
+  
+  u_LightColor = gl.getUniformLocation(gl.program, "u_LightColor");
+  if (!u_LightColor) {
+    console.log("Failed to get the storage location of u_LightColor");
+    return;
+  }
 
   a_CameraPos = gl.getUniformLocation(gl.program, "a_CameraPos");
   if (!a_CameraPos) {

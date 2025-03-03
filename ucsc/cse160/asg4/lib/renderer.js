@@ -122,6 +122,7 @@ class WebGLRenderer {
     gl.uniform1i(u_lightStatus, lightStatus);
     gl.uniform4fv(u_FragColor, new Float32Array([0.5, 0.5, 0.5, 1.0]));
     gl.uniform3fv(u_lightPos, g_lightpos);
+    gl.uniform3fv(u_LightColor, new Float32Array([lightR, lightG, lightB]));
 
     gl.uniform1i(u_light2Status, light2Status);
     gl.uniform4fv(u_FragColor, new Float32Array([0.5, 0.5, 0.5, 1.0]));
