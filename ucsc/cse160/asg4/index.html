@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>CSE160: Assignment 4</title>
+
+</head>
+<style>
+  /* html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  canvas {
+    display: block; 
+    width: 80%;
+    height: 80%;
+  }  */
+  canvas {
+    background-color: black;
+    border: 1px solid #ccc;
+    width: 100%;
+    height: 100%;
+  }
+
+  .container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .column {
+    flex: 1;
+    /* Each column takes equal width */
+    padding: 20px;
+    /* border: 1px solid black; */
+  }
+
+  input[type="range"] {
+    width: 90%;
+  }
+</style>
+
+<body onload="main()">
+  <div class="container">
+    <div class="column">
+      <canvas id="webgl_canvas">
+        Please use a browser that supports "canvas"
+      </canvas>
+    </div>
+    <div class="column">
+      Hi
+      <p>
+        Normals:
+        <button type="button" id="normalController">Turn Off</button>
+      </p>
+
+      <p>
+        Light:
+        <button type="button" id="lightController">Turn Off</button>
+      </p>
+      <p>
+        Light Animation:
+        <button type="button" id="lightAnimationController">Turn Off</button>
+      </p>
+
+      <p>
+        Light X
+        <input type="range" min="-10" max="10" value="5" id="lightX">
+      </p>
+      <p>
+        Light Y
+        <input type="range" min="-10" max="10" value="5" id="lightY">
+      </p>
+      <p>
+        Light Z
+        <input type="range" min="-10" max="10" value="5" id="lightZ">
+      </p>
+      <p id="perf">perfstats:</p>
+    </div>
+
+  </div>
+  <script src="./lib/webgl-utils.js"></script>
+  <script src="./lib/webgl-debug.js"></script>
+  <script src="./lib/cuon-matrix-cse160.js"></script>
+  <script src="./lib/cuon-utils.js"></script>
+  <script src="./lib/renderer.js"></script>
+  <script src="./lib/global.js"></script>
+  <script src="./lib/shaders.js"></script>
+  <script src="./lib/custom-utils.js"></script>
+  <script src="./lib/scene.js"></script>
+  <script src="./lib/point.js"></script>
+  <script src="./lib/triangle.js"></script>
+  <script src="./lib/circle.js"></script>
+  <script src="./lib/cube.js"></script>
+  <script src="./lib/sphere.js"></script>
+  <script src="./lib/dinosaur.js"></script>
+  <script src="./lib/cylinder.js"></script>
+  <script src="./lib/camera.js"></script>
+  <script src="./lib/game.js"></script>
+  <script src="asg4.js"></script>
+</body>
+
+</html>
