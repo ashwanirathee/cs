@@ -133,6 +133,7 @@ function sendTextureToTEXTURE2(image) {
 }
 
 var lightStatus = true;
+var light2Status = true;
 function addEventListeners(){
 
   canvas.addEventListener("click", async () => {
@@ -238,8 +239,9 @@ function tick() {
   requestAnimationFrame(tick);
 
   if(animate_light){
-    g_lightpos[0] = 2*Math.sin(g_seconds);
-    g_lightpos[2] = 2*Math.cos(g_seconds);
+    g_lightpos[0] = -14  + Math.sin(g_seconds);
+    g_lightpos[2] = 10 * Math.cos(g_seconds);
+    g_lightpos[1] = 10;
   }
 
 }

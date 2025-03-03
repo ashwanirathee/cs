@@ -33,7 +33,9 @@ var asp_ratio;
 var field_angle;
 var ntex = 16.0;
 var camera;
+
 let g_lightpos  = [2,1,2]
+let g_light2pos  = [-11,2,13]
 
 const normalController = document.getElementById("normalController");
 let normalControllerState  = true;

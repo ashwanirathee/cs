@@ -35,6 +35,10 @@ var FSHADER_SOURCE = `
 
     uniform int u_lightStatus; // 0 for off, 1 for on
     uniform vec3 u_lightPos;
+
+    uniform int u_light2Status; // 0 for off, 1 for on
+    uniform vec3 u_light2Pos;
+
     varying vec3 u_CameraPos;
 
     uniform vec4 u_FragColor;  // frag color, default is 0.5,0.5,0.5,1.0 
@@ -79,7 +83,7 @@ var FSHADER_SOURCE = `
       float specular = pow(max(dot(E,R),0.0), 5.0)*0.8;
 
       vec3 diffuse = vec3(1.0,1.0,0.9) * vec3(gl_FragColor) * nDotL * 0.7;
-      vec3 ambient = vec3(gl_FragColor) * 0.2;
+      vec3 ambient = vec3(gl_FragColor) * 0.5;
       if(u_lightStatus == 1){
         if(u_whichTexture == 0){
           gl_FragColor = vec4(diffuse + ambient + specular, 1.0);
@@ -87,6 +91,29 @@ var FSHADER_SOURCE = `
         } else {
           gl_FragColor = vec4(diffuse + ambient + specular, 1.0);
           // gl_FragColor = vec4(diffuse + ambient, 1.0);
+        }
+      }
+
+      vec3 lightDir = vec3(0.0, -1.0, 0.0);
+      vec3 spotDir = vec3(0.0, 1.0, 0.0);
+      float theta = dot(lightDir, normalize(-spotDir));
+      vec3 light2Vector = u_light2Pos - vec3(v_VertPos);
+      
+      float r1 = length(light2Vector);
+      vec3 L2 = normalize(light2Vector);
+      vec3 N2 = normalize(v_Normal);
+      float nDotL2 = max(dot(N2,L2),0.0);
+      vec3 R2 = reflect(-L2,N2);
+      vec3 E2 = normalize(u_CameraPos-vec3(v_VertPos));
+      float specular2 = pow(max(dot(E2,R2),0.0), 5.0)*0.8;
+      vec3 diffuse2 = vec3(1.0,1.0,0.9) * vec3(gl_FragColor) * nDotL2 * 0.7;
+      vec3 ambient2 = vec3(gl_FragColor) * 0.5;
+      if(u_light2Status == 1){
+        if(theta > 0.01) 
+        {       
+            gl_FragColor = vec4(diffuse2 + ambient2 + specular2, 1.0);
+        } else {
+          gl_FragColor = vec4(ambient2, 1.0);
         }
       }
     }

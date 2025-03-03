@@ -51,6 +51,13 @@ function connectVariablesToGLSL() {
     return;
   }
 
+
+  u_light2Pos = gl.getUniformLocation(gl.program, "u_light2Pos");
+  if (!u_light2Pos) {
+    console.log("Failed to get the storage location of u_light2Pos");
+    return;
+  }
+
   u_NormalMatrix = gl.getUniformLocation(gl.program, "u_NormalMatrix");
   if (!u_NormalMatrix) {
     console.log("Failed to get the storage location of u_NormalMatrix");
@@ -60,6 +67,11 @@ function connectVariablesToGLSL() {
   u_lightStatus = gl.getUniformLocation(gl.program, "u_lightStatus");
   if (!u_lightStatus) {
     console.log("Failed to get the storage location of u_lightStatus");
+    return;
+  }
+  u_light2Status = gl.getUniformLocation(gl.program, "u_light2Status");
+  if (!u_light2Status) {
+    console.log("Failed to get the storage location of u_light2Status");
     return;
   }
 

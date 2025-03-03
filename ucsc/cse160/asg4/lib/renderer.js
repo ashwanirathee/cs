@@ -65,11 +65,11 @@ class WebGLRenderer {
       [2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 4],
       [3, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 3],
       [4, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-      [3, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 4],
-      [3, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 2],
-      [3, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 2],
-      [2, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 3],
-      [2, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 2],
+      [3, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 4],
+      [3, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 2],
+      [3, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 2],
+      [2, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 3],
+      [2, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2],
       [4, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 4],
       [2, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 4],
       [2, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 3],
@@ -86,10 +86,10 @@ class WebGLRenderer {
       [2, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 4],
       [4, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 4],
       [2, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 3],
-      [4, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 2],
-      [3, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 2],
-      [2, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 4],
-      [2, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 4],
+      [4, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 2],
+      [3, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 2],
+      [2, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 4],
+      [2, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 4],
       [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 2],
       [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 3],
       [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3],
@@ -121,6 +121,11 @@ class WebGLRenderer {
     gl.uniform1i(u_lightStatus, lightStatus);
     gl.uniform4fv(u_FragColor, new Float32Array([0.5, 0.5, 0.5, 1.0]));
     gl.uniform3fv(u_lightPos, g_lightpos);
+
+    gl.uniform1i(u_light2Status, light2Status);
+    gl.uniform4fv(u_FragColor, new Float32Array([0.5, 0.5, 0.5, 1.0]));
+    gl.uniform3fv(u_light2Pos, g_light2pos);
+
     gl.uniform3f(a_CameraPos, camera.eye.elements[0], camera.eye.elements[1], camera.eye.elements[2]);
 
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -135,28 +140,47 @@ class WebGLRenderer {
     if(normalControllerState) sky.textureAtlasNum = -3;
     sky.render();
 
-    let body = new Cube(2,2);
-    body.color = [0.49, 0.788, 0.29, 1.0];
-    body.matrix.translate(2, 0, 0);
-    body.matrix.scale(0.2, 0.2, 0.2);
-    // if(normalControllerState) body.textureAtlasNum = -3;
-    body.render();
+    // let body = new Cube(2,2);
+    // body.color = [0.49, 0.788, 0.29, 1.0];
+    // body.matrix.translate(2, 0, 0);
+    // body.matrix.scale(0.2, 0.2, 0.2);
+    // // if(normalControllerState) body.textureAtlasNum = -3;
+    // body.render();
 
     var ball = new Sphere(1, 10,10, 2, 2); // radius 50, 20x20 resolution
-    ball.matrix.translate(-1,-2,-2);
-    ball.matrix.scale(1, 1, 1);
+    ball.matrix.translate(-15,-0.2, 10);
+    ball.matrix.scale(0.5, 0.5, 0.5);
     if(normalControllerState) ball.textureAtlasNum = -3;
     ball.render(gl, camera);
 
     var light = new Cube(-3, 1);
     light.color = [1, 1, 1, 1.0];
     light.matrix.translate(g_lightpos[0], g_lightpos[1], g_lightpos[2]);
-    light.matrix.scale(0.1, 0.1, 0.1);
-    if(normalControllerState) body.textureAtlasNum = -3;
+    light.matrix.scale(1, 1, 1);
+    if(normalControllerState) light.textureAtlasNum = -3;
     light.render();
 
+    var light2 = new Cube(-3, 1);
+    light2.color = [1, 1, 1, 1.0];
+    light2.matrix.translate(g_light2pos[0], g_light2pos[1], g_light2pos[2]);
+    light2.matrix.scale(0.3, 0.3, 0.3);
+    if(normalControllerState) light2.textureAtlasNum = -3;
+    light2.render();
+
+    let floor = new Cube(-2, 2);
+    floor.color = [0.49, 0.788, 0.29, 1.0];
+    floor.matrix.translate(0, -0.5, 0);
+    floor.matrix.scale(-32, 0.01, -32);
+    floor.render();
+
+    var ball = new Sphere(1, 10,10, 2, 2); // radius 50, 20x20 resolution
+    ball.matrix.translate(-11,-0.2, 13);
+    ball.matrix.scale(0.5, 0.5, 0.5);
+    if(normalControllerState) ball.textureAtlasNum = -3;
+    ball.render(gl, camera);
+
     // // Draw the maze cubes from the cached instances.
-    // this.drawMap();
+    this.drawMap();
     // Optionally, measure and display performance.
     var duration = performance.now() - startTime;
     document.getElementById("perf").innerHTML =
