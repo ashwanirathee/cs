@@ -2,7 +2,7 @@ class Camera {
     constructor(g_eye, g_at, g_up, field_angle, asp_ratio, near_plane, far_plane) {
 
         this.eye = new Vector3([-14, 0, 14]);
-        this.fov = 60.0
+        this.fov = 80.0
         this.at = new Vector3([-0.01, 0.5, -0.01]);
         this.up = new Vector3([0, 1, 0]);
 
@@ -45,8 +45,8 @@ class Camera {
         }
       
         // Return true if the cell is occupied (nonzero)
-        // return renderer.g_map[gridX][gridY] !== 0;
-        return false
+        return renderer.g_map[gridX][gridY] !== 0;
+        // return false
     }
 
     moveForward () {

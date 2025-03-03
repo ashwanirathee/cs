@@ -53,8 +53,11 @@ var FSHADER_SOURCE = `
     varying vec2 v_UV;
 
     void main() {
-
-      if (u_whichTexture == -4){
+      if(u_whichTexture == -6){
+        gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0); 
+      } else if(u_whichTexture == -5){
+        gl_FragColor = vec4(1.0, 1.0, 0.0, 1.0); 
+      } else if (u_whichTexture == -4){
         vec3 norm = normalize(v_Normal);
         gl_FragColor = vec4(norm, 1.0);
       } else if(u_whichTexture == -3){
@@ -72,50 +75,49 @@ var FSHADER_SOURCE = `
       } else {
         gl_FragColor = vec4(1,.2,.2,1);
       }
-
       vec3 lightVector = u_lightPos - vec3(v_VertPos);
-      float r = length(lightVector);
       vec3 L = normalize(lightVector);
       vec3 N = normalize(v_Normal);
-      float nDotL = max(dot(N,L),0.0);
-      vec3 R = reflect(-L,N);
-      vec3 E = normalize(u_CameraPos-vec3(v_VertPos));
-      float specular = pow(max(dot(E,R),0.0), 5.0)*0.8;
-
-      vec3 diffuse = vec3(1.0,1.0,0.9) * vec3(gl_FragColor) * nDotL * 0.7;
-      vec3 ambient = vec3(gl_FragColor) * 0.5;
-      if(u_lightStatus == 1){
-        if(u_whichTexture == 0){
-          gl_FragColor = vec4(diffuse + ambient + specular, 1.0);
-          //gl_FragColor = vec4(diffuse + ambient, 1.0);
-        } else {
-          gl_FragColor = vec4(diffuse + ambient + specular, 1.0);
-          // gl_FragColor = vec4(diffuse + ambient, 1.0);
-        }
-      }
-
-      vec3 lightDir = vec3(0.0, -1.0, 0.0);
-      vec3 spotDir = vec3(0.0, 1.0, 0.0);
+      float nDotL = max(dot(N, L), 0.0);
+      vec3 R = reflect(-L, N);
+      vec3 E = normalize(u_CameraPos - vec3(v_VertPos));
+      float specular = pow(max(dot(E, R), 0.0), 5.0) * 0.8;
+    
+      vec3 diffuse = vec3(1.0, 1.0, 0.9) * vec3(gl_FragColor) * nDotL * 0.7;
+      vec3 ambient = vec3(gl_FragColor) * 0.3;
+      vec3 light1Color = (u_lightStatus == 1) ? (diffuse + ambient + specular) : ambient;
+    
+      // Second light (u_light2Status)
+      vec3 lightDir = normalize(u_light2Pos - vec3(v_VertPos));
+      vec3 spotDir = vec3(0.5, -1.0, 0.0);
       float theta = dot(lightDir, normalize(-spotDir));
+    
       vec3 light2Vector = u_light2Pos - vec3(v_VertPos);
-      
-      float r1 = length(light2Vector);
+      float cutoffAngle = radians(20.0);
       vec3 L2 = normalize(light2Vector);
       vec3 N2 = normalize(v_Normal);
-      float nDotL2 = max(dot(N2,L2),0.0);
-      vec3 R2 = reflect(-L2,N2);
-      vec3 E2 = normalize(u_CameraPos-vec3(v_VertPos));
-      float specular2 = pow(max(dot(E2,R2),0.0), 5.0)*0.8;
-      vec3 diffuse2 = vec3(1.0,1.0,0.9) * vec3(gl_FragColor) * nDotL2 * 0.7;
-      vec3 ambient2 = vec3(gl_FragColor) * 0.5;
-      if(u_light2Status == 1){
-        if(theta > 0.01) 
-        {       
-            gl_FragColor = vec4(diffuse2 + ambient2 + specular2, 1.0);
-        } else {
-          gl_FragColor = vec4(ambient2, 1.0);
-        }
-      }
+      float nDotL2 = max(dot(N2, L2), 0.0);
+    
+      vec3 R2 = reflect(-L2, N2);
+      vec3 E2 = normalize(u_CameraPos - vec3(v_VertPos));
+      float specular2 = pow(max(dot(E2, R2), 0.0), 5.0) * 0.8;
+    
+      // Diffuse and ambient components for the second light
+      vec3 diffuse2 = vec3(1.0, 1.0, 0.9) * vec3(gl_FragColor) * nDotL2 * 0.7;
+      vec3 ambient2 = vec3(gl_FragColor) * 0.3;
+    
+      // Smooth transition based on theta (light angle)
+      float cutoff = cos(cutoffAngle);
+      float smoothFactor = smoothstep(cutoff - 0.1, cutoff + 0.1, theta);
+    
+      vec3 light2Color = (u_light2Status == 1) ? mix(ambient2, diffuse2 + specular2 + ambient2, smoothFactor) : ambient2;
+    
+      // Final blending of both light sources
+      vec3 finalLighting = light1Color + light2Color;
+    
+      // Apply the final color
+      gl_FragColor = vec4(finalLighting, 1.0);
+
     }
     
 `;

@@ -150,11 +150,21 @@ function addEventListeners(){
 
   normalController.addEventListener("click", () => {
     normalControllerState = !normalControllerState;
+    renderer.buildCubeInstances();
     normalController.textContent = 'Turn ' + (normalControllerState ? 'Off' : 'On');
+  });
+
+  spotlightController.addEventListener("click", () => {
+    light2Status = !light2Status;
+    spotlightController.textContent = 'Turn ' + (light2Status ? 'Off' : 'On');
   });
 
   lightController.addEventListener("click", () => {
     lightStatus = !lightStatus;
+    if(lightStatus == false){
+      animate_light = false;
+      lightAnimationController.textContent = 'Turn ' + (animate_light ? 'Off' : 'On');
+    }
     lightController.textContent = 'Turn ' + (lightStatus ? 'Off' : 'On');
   });
 
@@ -178,19 +188,19 @@ function addEventListeners(){
   document.addEventListener('keydown', function(event) {
     switch(event.key) {
       case 'w':
-        console.log("W")
+        // console.log("W")
         camera.moveForward()
         break;
       case 'a':
-        console.log("A")
+        // console.log("A")
         camera.moveLeft()
         break;
       case 's':
-        console.log("S")
+        // console.log("S")
        camera.moveBackward()
         break;
       case 'd':
-        console.log("D")
+        // console.log("D")
         camera.moveRight() 
         break;
       case 'q':

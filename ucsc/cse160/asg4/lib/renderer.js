@@ -43,6 +43,7 @@ class WebGLRenderer {
             cube.color = [1.0, 1.0, 1.0, 1.0];
             // Position cube relative to maze center:
             cube.matrix.translate(x - this.rows / 2, h - 1, y - this.cols / 2);
+            if(normalControllerState) cube.textureAtlasNum = -3;
             this.cubeInstances.push(cube);
           }
         }
@@ -134,9 +135,9 @@ class WebGLRenderer {
     gl.clearColor(...currentColor, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    let sky = new Cube(2, 2);
+    let sky = new Cube(-6, 2);
     sky.color = [0.235, 0.639, 1, 1.0];
-    sky.matrix.scale(-5, -5, -10);
+    sky.matrix.scale(-50, -100, -50);
     if(normalControllerState) sky.textureAtlasNum = -3;
     sky.render();
 
@@ -147,37 +148,37 @@ class WebGLRenderer {
     // // if(normalControllerState) body.textureAtlasNum = -3;
     // body.render();
 
-    var ball = new Sphere(1, 10,10, 2, 2); // radius 50, 20x20 resolution
+    var ball = new Sphere(1, 10,10, -6, 2); // radius 50, 20x20 resolution
     ball.matrix.translate(-15,-0.2, 10);
     ball.matrix.scale(0.5, 0.5, 0.5);
     if(normalControllerState) ball.textureAtlasNum = -3;
     ball.render(gl, camera);
 
-    var light = new Cube(-3, 1);
+    var light = new Cube(-5, 1);
     light.color = [1, 1, 1, 1.0];
     light.matrix.translate(g_lightpos[0], g_lightpos[1], g_lightpos[2]);
     light.matrix.scale(1, 1, 1);
-    if(normalControllerState) light.textureAtlasNum = -3;
+    if(normalControllerState) light.textureAtlasNum = -5;
     light.render();
 
-    var light2 = new Cube(-3, 1);
+    var light2 = new Cube(-5, 1);
     light2.color = [1, 1, 1, 1.0];
     light2.matrix.translate(g_light2pos[0], g_light2pos[1], g_light2pos[2]);
     light2.matrix.scale(0.3, 0.3, 0.3);
-    if(normalControllerState) light2.textureAtlasNum = -3;
+    if(normalControllerState) light2.textureAtlasNum = -5;
     light2.render();
 
-    let floor = new Cube(-2, 2);
+    let floor = new Cube(2, 3);
     floor.color = [0.49, 0.788, 0.29, 1.0];
     floor.matrix.translate(0, -0.5, 0);
     floor.matrix.scale(-32, 0.01, -32);
     floor.render();
 
-    var ball = new Sphere(1, 10,10, 2, 2); // radius 50, 20x20 resolution
-    ball.matrix.translate(-11,-0.2, 13);
-    ball.matrix.scale(0.5, 0.5, 0.5);
-    if(normalControllerState) ball.textureAtlasNum = -3;
-    ball.render(gl, camera);
+    var ball2 = new Sphere(1, 10,10, -6, 2); // radius 50, 20x20 resolution
+    ball2.matrix.translate(-11,-0.2, 13);
+    ball2.matrix.scale(0.5, 0.5, 0.5);
+    if(normalControllerState) ball2.textureAtlasNum = -3;
+    ball2.render(gl, camera);
 
     // // Draw the maze cubes from the cached instances.
     this.drawMap();
