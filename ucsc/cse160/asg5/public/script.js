@@ -97,6 +97,7 @@ let blocker = document.getElementById( 'blocker' );
 let instructions = document.getElementById( 'instructions' );
 const objLoader = new OBJLoader();
 const mtlLoader = new MTLLoader();
+const loader = new THREE.CubeTextureLoader();
 
 function init() {
   canvas = document.querySelector("#c");
@@ -119,6 +120,17 @@ function init() {
       scene.add(root);
     });
   });
+
+
+  const texture = loader.load( [
+    'https://threejs.org/manual/examples/resources/images/cubemaps/computer-history-museum/pos-x.jpg',
+    'https://threejs.org/manual/examples/resources/images/cubemaps/computer-history-museum/neg-x.jpg',
+    'https://threejs.org/manual/examples/resources/images/cubemaps/computer-history-museum/pos-y.jpg',
+    'https://threejs.org/manual/examples/resources/images/cubemaps/computer-history-museum/neg-y.jpg',
+    'https://threejs.org/manual/examples/resources/images/cubemaps/computer-history-museum/pos-z.jpg',
+    'https://threejs.org/manual/examples/resources/images/cubemaps/computer-history-museum/neg-z.jpg',
+  ] );
+  scene.background = texture;
 
   // controls = new FirstPersonControls(camera, canvas);
   // controls.constrainVertical = true;
