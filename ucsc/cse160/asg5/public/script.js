@@ -2,6 +2,8 @@ import * as THREE from "three";
 import { PointerLockControls } from "three/addons/controls/PointerLockControls.js";
 import { ImprovedNoise } from "three/addons/math/ImprovedNoise.js";
 import * as BufferGeometryUtils from "three/addons/utils/BufferGeometryUtils.js";
+import {OBJLoader} from 'three/addons/loaders/OBJLoader.js';
+import {MTLLoader} from 'three/addons/loaders/MTLLoader.js';
 
 let canvas;
 let renderer;
@@ -93,6 +95,9 @@ function removePlayer(id) {
 
 let blocker = document.getElementById( 'blocker' );
 let instructions = document.getElementById( 'instructions' );
+const objLoader = new OBJLoader();
+const mtlLoader = new MTLLoader();
+
 function init() {
   canvas = document.querySelector("#c");
   renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
@@ -106,6 +111,14 @@ function init() {
   scene = new THREE.Scene();
   // scene.fog = new THREE.Fog(0xffffff, 10, 100);
   scene.background = new THREE.Color(0xbfd1e5);
+
+  mtlLoader.load('./minecraft-small-house.mtl', (mtl) => {
+    mtl.preload();
+    objLoader.setMaterials(mtl);
+    objLoader.load('./minecraft-small-house.obj', (root) => {
+      scene.add(root);
+    });
+  });
 
   // controls = new FirstPersonControls(camera, canvas);
   // controls.constrainVertical = true;
@@ -243,7 +256,7 @@ function render(time) {
     velocity.x -= velocity.x * 10.0 * delta;
     velocity.z -= velocity.z * 10.0 * delta;
 
-    velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+    velocity.y -= 9.8 * 1.0 * delta; // 100.0 = mass
 
     direction.z = Number( moveForward ) - Number( moveBackward );
     direction.x = Number( moveRight ) - Number( moveLeft );
@@ -264,10 +277,10 @@ function render(time) {
 
     controls.object.position.y += ( velocity.y * delta ); // new behavior
 
-    if ( controls.object.position.y < 10 ) {
+    if ( controls.object.position.y < -5 ) {
 
       velocity.y = 0;
-      controls.object.position.y = 10;
+      controls.object.position.y = -5;
 
       canJump = true;
 
@@ -276,12 +289,12 @@ function render(time) {
   }
 
   prevTime = time;
-  //   cubes.forEach((cube, ndx) => {
-  //     const speed = 1 + ndx * 0.1;
-  //     const rot = time * speed;
-  //     cube.rotation.x = rot;
-  //     cube.rotation.y = rot;
-  //   });
+  // cubes.forEach((cube, ndx) => {
+  //   const speed = 1 + ndx * 0.1;
+  //   const rot = time * speed;
+  //   cube.rotation.x = rot;
+  //   cube.rotation.y = rot;
+  // });
   // console.log(camera.position);
 
     // Send position to server
@@ -457,6 +470,17 @@ async function main() {
   const mesh = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial({ map: texture, side: THREE.DoubleSide }));
   console.log("mesh", mesh);
   scene.add(mesh);
+
+  const geometry1 = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+  //   cubes = [makeInstance(geometry, 0x44aa88, 0), makeInstance(geometry, 0x8844aa, -2), makeInstance(geometry, 0xaa8844, 2)];
+  // cubes = [];
+  // for (let i = 0; i < 32; i++) {
+  //   for (let j = 0; j < 32; j++) {
+  //     cubes.push(makeInstance(geometry1, 0x44aa88, i, 0, j));
+  //   }
+  // }
+  // scene.add(geometry1);
+
 
   const ambientLight = new THREE.AmbientLight(0xeeeeee, 3);
   scene.add(ambientLight);
