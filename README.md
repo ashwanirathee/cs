@@ -31,7 +31,7 @@
 - <a href="https://www.santacruzpl.org/services/wireless-printing/" style="color: inherit; text-decoration: underline;">SC public library print service</a>
 - <a href="https://drive.google.com" style="color: inherit; text-decoration: underline;">Google drive</a>
 - <a href="apps/cheatsheets/" style="color: inherit; text-decoration: underline;">Python, Cpp Cheatsheets</a>
-
+- <a href="https://gist.github.com/ashwanirathee/d39b704e13e5fa18181ab474d5f7fdb7" style="color: inherit; text-decoration: underline;">Project Ideas</a>
 #### UCSC
 
 <details>
