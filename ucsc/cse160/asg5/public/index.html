@@ -1,58 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multiplayer Three.js Game</title>
-    <style>
-        html, body {
-        margin: 0;
-        height: 100%;
-        }
-        #c {
-        width: 100%;
-        height: 100%;
-        display: block;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multiplayer Three.js Game</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+    }
 
-        #blocker {
-				position: absolute;
-				width: 100%;
-				height: 100%;
-				background-color: rgba(0,0,0,0.5);
-			}
+    #c {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
 
-			#instructions {
-				width: 100%;
-				height: 100%;
+    #blocker {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
 
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
+    #instructions {
+      width: 100%;
+      height: 100%;
 
-				text-align: center;
-				font-size: 14px;
-				cursor: pointer;
-			}
-    </style>
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      text-align: center;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <div id="blocker">
-    <div id="instructions">
-      <p style="font-size:36px">
-        Click to play
-      </p>
-      <p>
-        Move: WASD<br/>
-        Jump: SPACE<br/>
-        Look: MOUSE
-      </p>
-    </div>
-  </div>
-
-    <canvas id="c"></canvas>
-    <script type="importmap">
+  <canvas id="c"></canvas>
+  <script type="importmap">
         {
           "imports": {
             "three": "https://cdn.jsdelivr.net/npm/three@v0.174.0/build/three.module.js",
@@ -60,7 +50,7 @@
           }
         }
       </script>
-         
-    <script type="module" src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
+
 </html>
